@@ -20,6 +20,7 @@ int main()
     printf("===================================================\n");
     printf("\t\t TYPE \"Start\" TO PLAY\t\t\t\n");
     printf("===================================================\n");
+    printf("  > ");
     scanf("%s", user_input);    // try fgets maybe... I'm tired. the if statements dont work... skips directly to else and returns 2.
    // printf("you wrote: %s", user_input); // although when checked in with printf, it seems that scanf reads everything, not just the first character only... I guess it does not store it as a variable then?
     if(strcmp(user_input, "Start") == 0) // FUCK YES FINALLY IT CAN START
@@ -38,7 +39,7 @@ int main()
          // I gotta get some work done on this...
          // I better put it into the "to be done" section, I usually don't read comments.
         scanf("%s", user_input);
-        if (strcmp(user_input, "Y") == 0 || strcmp(user_input, " ") == 0) // fuck how do I detect if the user just pressed enter, do I just not let them?
+        if (strcmp(user_input, "Y") == 0 || strcmp(user_input, "\ ") == 0) // fuck how do I detect if the user just pressed enter, do I just not let them?
         {
             printf("debug is working fine\n");
 
@@ -73,9 +74,10 @@ int main()
         printf("- Make a function in a separate file, prototype this first in Python though. Some sort of a loop, a while loop, that'll take different values like how for or printf does. This loop will be used for fights. It'll be a barebones function, we'll fill in the blanks--- string to print out like 'You defeated the boss!', 'You used punch, you did 20 damage'--- ourselves.\n");
         printf("-Randomize monsters' attacks. They'll have various attacks that do different amounts of damage. Use a random number generator or something ;_;\n");
         printf("Find a way to printf the following character, it's in the source code. Here I'll even print it here, BUT this is a troublesome way to print out a '%s'.\n", special_character);
+        printf("-Separate the source files\n");
         //printf("- DONT use goto! Apparently it's bad practice... find an alternative. Should be worth it, especially when you look at the old CS source code.. Damn that sure was one helluva spaghetti code.\n");
         printf("Added/fixed stuff:\n");
-        printf("+Finally stopped using goto, I am using for loops instead now that for stopped being such a dick and started working...");
+        printf("+Finally stopped using goto, I am using for loops instead now that for stopped being such a dick and started working...\n");
         printf("This is all for now I guess. New ideas come by every now and then, which I'll note down here in this 'Easter Egg' :P.\n");
         return 1;
 
