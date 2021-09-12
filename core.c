@@ -14,7 +14,7 @@ int main()
     player_health = 200;
     punch_attack_power = 5;
 
-    printf("Welcome to the pre-alpha(?) version of <insert game name here>.\nCOPYRIGHT u/Bahrican798\n"); //you may not modify the source code, you can't fork it, you are only allowed to view it for the time being. LOLOLOL it has GPL v3 now, anyone can fork it, they have to return the changed code though :P
+    printf("Welcome to the pre-alpha(?) version of <insert game name here>.\nCOPYRIGHT u/Bahrican798\n"); //"you may not modify the source code, you can't fork it, you are only allowed to view it for the time being." LOLOLOL it has GPL v3 now, anyone can fork it, they have to return the changed code though :P
     printf("I know, it's not much, obviously. This is as much as I can get done in this environment...\n");
     char user_input[100];
     printf("===================================================\n");
