@@ -94,6 +94,7 @@ int main()
             printf("-Either use command line options like --start, --debug and whatever, or use an in-game prompt like we are now. u/Urthemando_Mod looks like he is thirsty for cli options, so...\n");
             printf("-Perhaps make the variables an array? IF we ever add difficulty options to this, that could be useful to load in different values, e.g 10 damage for a monster in easy mode, 15 in normal, 20 in expert, 300/200/150 player health etc.\n");
             //printf("-Check fgets, scanf seems to be a pain...\n");
+            printf("-Add defense points too! Oh and have a multiplier for the attack powers! Like in pokémon, but simplified!! Your attack power will be multiplied by a random number between 0.5 and 1.0!! so exciting maan i love programming!!!!1!");
             printf("Added/fixed stuff:\n");
             printf("+Finally stopped using goto, I am using for loops instead now that for stopped being such a dick and started working...\n");
             printf("+Got rid of scanf, using fgets now.\n");
