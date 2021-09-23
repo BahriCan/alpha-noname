@@ -19,6 +19,7 @@ int main()
     int left_path_wood_is_taken = 0; // I consider zero to be false, 1 to be true. The woods in the left path are initially not taken, they will be once the player goes to the left path.
     int right_path_wood_is_taken = 0;
     int straight_path_wood_is_taken = 0;
+    int user_wood_amount = 0;
     int isInvalidInput = 1; // this variable is to detect whether or not the user entered a correct value, it'll turn into a 0 and be considered false, and end the loop and continue off of that IF/ELSE block.
     //int isInvalidInput2 = 1; // another variable bcuz i cant use the same one in nested do-while loops
     monster_alpha = 15;
@@ -111,12 +112,13 @@ the_threeway_path_in_the_woods:
                         //stupid me, I forgot the \n in the user string :DDD such a relief, it is better than an orgasm
                         if(strcmp(user_input, "L\n") == 0 || strcmp(user_input, "l\n") == 0)
                         {
-                            isInvalidInput = 1;
+                            isInvalidInput = 0;
                             printf("\nYou chose to go left.\n");
                             if(left_path_wood_is_taken == 0)
                             {
                                 printf("You found 2 pieces of wood!\n");
                                 left_path_wood_is_taken = 1;
+                                user_wood_amount += 2;
                             }
                             else if(left_path_wood_is_taken != 0)
                             {
@@ -145,21 +147,44 @@ the_threeway_path_in_the_woods:
                                 unneeded code... will be removed later on
                             }*/
 
+
                         }
                         else if(strcmp(user_input, "R\n") == 0 || strcmp(user_input, "r\n") == 0)
                         {
                             printf("\nYou chose to go right.\n");
+                            if(right_path_wood_is_taken == 0)
+                            {
+                                printf("You found 3 pieces of wood!\n");
+                                right_path_wood_is_taken = 1;
+                                user_wood_amount += 3;
+                            }
+                            else if(right_path_wood_is_taken != 0)
+                            {
+                                printf("There's nothing here....\n");
+                            }
+
                         }
                         else if(strcmp(user_input, "S\n") == 0 || strcmp(user_input, "s\n") == 0)
                         {
                             printf("\nYou chose to go straight ahead.\n");
+                            if(straight_path_wood_is_taken == 0)
+                            {
+                                printf("You found a piece of wood.\n");
+                                straight_path_wood_is_taken = 1;
+                                user_wood_amount++;
+                            }
+                            else if(straight_path_wood_is_taken != 0)
+                            {
+                                printf("There's nothing here....\n");
+                            }
                         }
-                        else if (user_input[1] == '\0')
-                            isInvalidInput = 1;
+                       // else if (user_input[1] == '\0')
+                         //   isInvalidInput = 1;
                     }
-                    while(isInvalidInput);
+                    while(1);
                     printf("\ntest, isInvalidInput is %d", isInvalidInput );
                 }
+                printf("\nhere's where you make a campfire");
             }
             while(isInvalidInput);
             return 0;
@@ -189,6 +214,7 @@ the_threeway_path_in_the_woods:
             printf("-A start menu wouldn't be so bad, like the ncurses menus in shell scripts!\n");
             printf("-Let the user choose their character's name.\n");
             printf("-Send the user back to the prompt if they input something not related or whatever.\n");
+            printf("- Add an inventory command, the player can check their inventory and see what they have at any time. Make it a function perhaps? check structs as well\n");
             printf("-Add an option to save the game... I don't know how to do that, I'll do it but not today.\n");
             printf("- Make a function in a separate file, prototype this first in Python though. Some sort of a loop, a while loop, that'll take different values like how for or printf does. This loop will be used for fights. It'll be a barebones function, we'll fill in the blanks--- string to print out like 'You defeated the boss!', 'You used punch, you did 20 damage'--- ourselves.\n");
             printf("-Randomize monsters' attacks. They'll have various attacks that do different amounts of damage. Use a random number generator or something ;_;\n");
