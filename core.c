@@ -20,6 +20,7 @@ int main()
     int right_path_wood_is_taken = 0;
     int straight_path_wood_is_taken = 0;
     int isInvalidInput = 1; // this variable is to detect whether or not the user entered a correct value, it'll turn into a 0 and be considered false, and end the loop and continue off of that IF/ELSE block.
+    //int isInvalidInput2 = 1; // another variable bcuz i cant use the same one in nested do-while loops
     monster_alpha = 15;
     player_health = 200;
     punch_attack_power = 5;
@@ -90,18 +91,18 @@ int main()
 
                     isInvalidInput = 0;
                     printf("You decided not to go inside the cave.\n");
-                    sleep(3);
+                    //sleep(3);
                     printf("It's getting cold... You imagine a warm campfire, and set out to get some firewood.\n");
                     printf(".\n");
-                    sleep(1);
+                    // sleep(1);
                     printf("..\n");
-                    sleep(1);
+                    //sleep(1);
                     printf("...\n");
-                    sleep(5);
+                    //sleep(5);
                     printf("You wander in the forest, searching for some wood.\n");
-                    sleep(0.5);
+                    //sleep(0.5);
                     printf("You have three paths ahead of you.\n");
-                    sleep(0.5);
+                    //sleep(0.5);
 the_threeway_path_in_the_woods:
                     do
                     {
@@ -110,27 +111,44 @@ the_threeway_path_in_the_woods:
                         //stupid me, I forgot the \n in the user string :DDD such a relief, it is better than an orgasm
                         if(strcmp(user_input, "L\n") == 0 || strcmp(user_input, "l\n") == 0)
                         {
-                            isInvalidInput = 0;
+                            isInvalidInput = 1;
                             printf("\nYou chose to go left.\n");
+                            if(left_path_wood_is_taken == 0)
+                            {
+                                printf("You found 2 pieces of wood!\n");
+                                left_path_wood_is_taken = 1;
+                            }
+                            else if(left_path_wood_is_taken != 0)
+                            {
+                                printf("There's nothing here....\n");
+                            }
                             // now to write a loop that'll take the user here again if they wanna, and check if the wood here has been already taken.
 
-                             printf("Go back?(Y/n)>||: ");
+                            //gotta loop this user input part such that it'll come back here when they input an invalid command.. it's getting messier even with astyle
+
+                            /*printf("Go back?(Y/n) >||: ");
                             //FUUCK I LOVE DOING THIS SO MUCH, I LOVE PROGRAMMING I'M JUST _FLOWING_ WITH IDEAS RIGHT NOW!!♥♥♥
                             fgets(user_input, 255, stdin);
                             //ahh no wait.. should I really use goto here? I mean, I can write comments to explain why and where exactly it is heading, and I can refactor it later on if it starts getting messy with goto and replace it with do-while...
                             if(strcmp(user_input, "Y\n") == 0 || strcmp(user_input, "y\n") == 0 || user_input[1] == '\0')
                             {
-                                isInvalidInput = 1;
+                                printf("\ntest code 2, isInvalidinput is %d\n", isInvalidInput2);
+                                break;
+                                printf("\ntest, isInvalidInput is %d, isInvalidInput2 is %d\n", isInvalidInput, isInvalidInput2);
+
                             }
-                            else if(strcmp(user_input, "N") == 0 || strcmp(user_input, "n") == 0)
+                            else if(strcmp(user_input, "N\n") == 0 || strcmp(user_input, "n\n") == 0)
                             {
-                                continue;
-                            }
+                                printf("\ntest code");
+                                printf("\ntest, isInvalidInput is %d, isInvalidInput2 is %d\n", isInvalidInput, isInvalidInput2);
+                                break;
+                                unneeded code... will be removed later on
+                            }*/
+
                         }
                         else if(strcmp(user_input, "R\n") == 0 || strcmp(user_input, "r\n") == 0)
                         {
                             printf("\nYou chose to go right.\n");
-
                         }
                         else if(strcmp(user_input, "S\n") == 0 || strcmp(user_input, "s\n") == 0)
                         {
@@ -140,7 +158,7 @@ the_threeway_path_in_the_woods:
                             isInvalidInput = 1;
                     }
                     while(isInvalidInput);
-                    printf("test");
+                    printf("\ntest, isInvalidInput is %d", isInvalidInput );
                 }
             }
             while(isInvalidInput);
