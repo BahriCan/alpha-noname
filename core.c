@@ -178,8 +178,8 @@ the_threeway_path_in_the_woods:
                                 printf("There's nothing here....\n");
                             }
                         }
-                        else if (user_input[1] == '\0')
-                            isInvalidInput = 1;
+                       // else if (user_input[1] == '\0')
+                         //   isInvalidInput = 1;
                     }
                     while(1);
                     printf("\ntest, isInvalidInput is %d", isInvalidInput );
@@ -237,7 +237,7 @@ the_threeway_path_in_the_woods:
         }
         else if(strcmp(user_input, "test") == 0)
         {
-            //isInvalidInput = 0; // ends the do-while loop by setting the loop condition to false
+            isInvalidInput = 0; // ends the do-while loop by setting the loop condition to false
             for( ; monster_alpha > 0;) // I FUCKING HATE THE FOR STATEMENT IN C WHY DO I HAVE TO "iNItiaLiZE" SHIT I JUST WANNA GIVE A SINGLE CONDITION AND BE FUCKING DONE WITH IT
                 // Oh nevermind ._. apparently I can just put in a semicolon and fuck off with it... why didn't work the first time I tried it though? I did the exact same thing..
                 // this is pain
