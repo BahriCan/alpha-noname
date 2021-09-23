@@ -107,7 +107,8 @@ the_threeway_path_in_the_woods:
                     {
                         printf("Go [L]eft,[R]ight,[S]traight. >||: ");
                         fgets(user_input, 255, stdin);
-                        if(strcmp(user_input, "L") == 0 || strcmp(user_input, "l") == 0)
+                        //stupid me, I forgot the \n in the user string :DDD such a relief, it is better than an orgasm
+                        if(strcmp(user_input, "L\n") == 0 || strcmp(user_input, "l\n") == 0)
                         {
                             isInvalidInput = 0;
                             printf("\nYou chose to go left.\n");
@@ -121,12 +122,12 @@ the_threeway_path_in_the_woods:
                             //{
                             //}
                         }
-                        else if(strcmp(user_input, "R") == 0 || strcmp(user_input, "r") == 0)
+                        else if(strcmp(user_input, "R\n") == 0 || strcmp(user_input, "r\n") == 0)
                         {
                             printf("\nYou chose to go right.\n");
 
                         }
-                        else if(strcmp(user_input, "S") == 0 || strcmp(user_input, "s") == 0)
+                        else if(strcmp(user_input, "S\n") == 0 || strcmp(user_input, "s\n") == 0)
                         {
                             printf("\nYou chose to go straight ahead.\n");
                         }
