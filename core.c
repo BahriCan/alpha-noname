@@ -1,5 +1,9 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#define MAX_LEN 128
+
+void print_image(FILE * imagefile);
 
 int main()
 {
@@ -9,9 +13,9 @@ int main()
     int punch_attack_power;
     char character_name[255]; // SHIIIT IF I DO NOT PROVIDE A VALUE IT'LL NEVER BE BUFFER OVERRUN FUCK YEAAH
     // never mind.. i have to provide a value for single-dimensional arrays. OR I COULD JUST = TO FGETS... nah not gonna happen :/
-    char special_character[1] = "[";
+    char special_character[2] = "[";
     // eh fuck it I'll just use an integer variable to define true or false values. 0-false, 1-true.
-    int goblin_is_defeated = 0;
+    int goblin_is_defeated = 1;
     int isInvalidInput = 1; // this variable is to detect whether or not the user entered a correct value, it'll turn into a 0 and be considered false, and end the loop and continue off of that IF/ELSE block.
     monster_alpha = 15;
     player_health = 200;
@@ -44,20 +48,45 @@ int main()
             printf("You're wondering around.\n");
             printf("You keep walking for hours on end.\n");
             printf("It's getting late...\n");
+            isInvalidInput = 1;
+            do{
             printf("You stumble upon a little cave. Go inside? Y/n >||: ");
             // I need to find a way to print [], (), {}....
              // well making a string variable and putting '[' in it and printing it via printf %s IS an option... but not efficient. There MUST be a way to just print those characters without a hassle!
              // I gotta get some work done on this...
              // I better put it into the "to be done" section, I usually don't read comments.
             fgets(user_input,255,stdin);
-            user_input[strcspn(user_input, "\n")] = 0;
             //printf("%s.n", user_input);
             // okay we either use fgets and chop off the attached newline each time, which is a bother, or just include in the newline when comparing strings and only chop off the newline when needed to which'll result in fewer lines of code. latter sounds better, right?
-            if (strcmp(user_input, "Y") == 0 || user_input[0] == '\0') // fuck how do I detect if the user just pressed enter, do I just not let them?
+            if (strcmp(user_input, "Y\n") == 0 || user_input[1] == '\0') // fuck how do I detect if the user just pressed enter, do I just not let them? okay nevermind figured that part out
             {
-                printf("debug is working fine\n");
+                isInvalidInput = 0;
+                char * filename = "image.txt";
+                FILE * imagefile = NULL;
+
+                if((imagefile = fopen(filename,"r")) == NULL)
+                {
+                    fprintf(stderr,"error opening %s\n",filename);
+                    return 1;
+                }
+
+                print_image(imagefile);
+
+                fclose(imagefile);
+                sleep(3);
+                printf("\nYou feel a cold breeze. You think of starting a campfire, and go out.");
 
             }
+            else if (strcmp(user_input, "N\n") == 0 || strcmp(user_input, "n\n") == 0) // I could use strncmp to make the check case-insensitive, which would shorten the code.. but do I really wanna use strncmp? looks like a bother to me
+            {
+                isInvalidInput = 0;
+                printf("You decided not to go inside the cave.\n");
+                sleep(3);
+                printf("It's getting cold... You imagine a warm campfire, and set out to get some firewood.");
+
+            }
+            }while(isInvalidInput);
+            make_a_campfire:
             return 0;
         }
 
@@ -94,6 +123,8 @@ int main()
             printf("-Either use command line options like --start, --debug and whatever, or use an in-game prompt like we are now. u/Urthemando_Mod looks like he is thirsty for cli options, so...\n");
             printf("-Perhaps make the variables an array? IF we ever add difficulty options to this, that could be useful to load in different values, e.g 10 damage for a monster in easy mode, 15 in normal, 20 in expert, 300/200/150 player health etc.\n");
             //printf("-Check fgets, scanf seems to be a pain...\n");
+            printf("-The save/load feature can be a function!\n");
+            printf("-Hold the fuck up this is getting more and more complicated.. If I am going to be writing the same scenario again in another decision later on, this'll double the amount of code and the time to write it! There MUST be a way to join the both ends into the same route... I need to get out of the if statements.. Should we use goto/longjmp? I think so..");
             printf("-Add defense points too! Oh and have a multiplier for the attack powers! Like in pokémon, but simplified!! Your attack power will be multiplied by a random number between 0.5 and 1.0!! so exciting maan i love programming!!!!1!");
             printf("Added/fixed stuff:\n");
             printf("+Finally stopped using goto, I am using for loops instead now that for stopped being such a dick and started working...\n");
@@ -135,3 +166,12 @@ int main()
     return 0;
 
 }
+
+void print_image(FILE * imagefile)
+{
+    char read_string[MAX_LEN];
+
+    while(fgets(read_string,sizeof(read_string),imagefile) != NULL)
+        printf("%s",read_string);
+}
+
