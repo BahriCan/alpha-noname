@@ -114,13 +114,18 @@ the_threeway_path_in_the_woods:
                             printf("\nYou chose to go left.\n");
                             // now to write a loop that'll take the user here again if they wanna, and check if the wood here has been already taken.
 
-                            // printf("Go back?(Y/n)>||: ");
+                             printf("Go back?(Y/n)>||: ");
                             //FUUCK I LOVE DOING THIS SO MUCH, I LOVE PROGRAMMING I'M JUST _FLOWING_ WITH IDEAS RIGHT NOW!!♥♥♥
-                            //fgets(user_input, 255, stdin);
+                            fgets(user_input, 255, stdin);
                             //ahh no wait.. should I really use goto here? I mean, I can write comments to explain why and where exactly it is heading, and I can refactor it later on if it starts getting messy with goto and replace it with do-while...
-                            //if(strcmp(user_input, "Y\n") == 0 || strcmp(user_input, "y\n") == 0 || user_input[1] == '\0')
-                            //{
-                            //}
+                            if(strcmp(user_input, "Y\n") == 0 || strcmp(user_input, "y\n") == 0 || user_input[1] == '\0')
+                            {
+                                isInvalidInput = 1;
+                            }
+                            else if(strcmp(user_input, "N") == 0 || strcmp(user_input, "n") == 0)
+                            {
+                                continue;
+                            }
                         }
                         else if(strcmp(user_input, "R\n") == 0 || strcmp(user_input, "r\n") == 0)
                         {
@@ -131,9 +136,11 @@ the_threeway_path_in_the_woods:
                         {
                             printf("\nYou chose to go straight ahead.\n");
                         }
+                        else if (user_input[1] == '\0')
+                            isInvalidInput = 1;
                     }
                     while(isInvalidInput);
-
+                    printf("test");
                 }
             }
             while(isInvalidInput);
