@@ -301,7 +301,17 @@ the_threeway_path_in_the_woods:
             print_image(imagefile);
             fclose(imagefile);
             printf("\nFight the hardest foes...\n");
-            return 3;
+            filename = "pow!.txt";
+            sleep(3);
+            if((imagefile = fopen(filename,"r")) == NULL)
+            {
+                fprintf(stderr,"error opening %s\n", filename);
+                return -1;
+            }
+            print_image(imagefile);
+            fclose(imagefile);
+            printf("\nChallenge yourself in <insert game name here>!\n");
+            isInvalidInput = 1;
         }
         else
         {
