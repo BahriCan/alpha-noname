@@ -71,13 +71,13 @@ int main()
                 if (strcmp(user_input, "Y\n") == 0 || user_input[1] == '\0') // fuck how do I detect if the user just pressed enter, do I just not let them? okay nevermind figured that part out
                 {
                     isInvalidInput = 0;
-                    char * filename = "image.txt";
+                    char * filename = "mountains.txt";
                     FILE * imagefile = NULL;
 
                     if((imagefile = fopen(filename,"r")) == NULL)
                     {
                         fprintf(stderr,"error opening %s\n",filename);
-                        return 1;
+                        return -1;
                     }
 
                     print_image(imagefile);
@@ -178,8 +178,8 @@ the_threeway_path_in_the_woods:
                                 printf("There's nothing here....\n");
                             }
                         }
-                       // else if (user_input[1] == '\0')
-                         //   isInvalidInput = 1;
+                        // else if (user_input[1] == '\0')
+                        //   isInvalidInput = 1;
                     }
                     while(1);
                     printf("\ntest, isInvalidInput is %d", isInvalidInput );
@@ -257,6 +257,51 @@ the_threeway_path_in_the_woods:
             }
 
             // Here's an idea.. don't erase the stuff you put in this chunk of code. Instead just comment them out, or put in goto statements and special commands which'll allow you to jump among testing grounds
+        }
+        else if (strcmp(user_input, "demo") == 0)
+        {
+            printf("In a far away, distant land...\n");
+            char * filename = "mountains.txt";
+            FILE * imagefile = NULL;
+
+            if((imagefile = fopen(filename,"r")) == NULL)
+            {
+                fprintf(stderr,"error opening %s\n",filename);
+                return -1;
+            }
+
+            print_image(imagefile);
+
+            fclose(imagefile);
+
+            sleep(3);
+            printf("\nYou take off on an adventure...\n");
+            sleep(3);
+            filename = "rocky-mountains.txt";
+
+            if((imagefile = fopen(filename,"r")) == NULL)
+            {
+                fprintf(stderr,"error opening %s\n", filename);
+                return -1;
+            }
+
+            print_image(imagefile);
+
+            fclose(imagefile);
+            sleep(3);
+            printf("\nYou overcome the hardest challenges..!\n");
+
+            sleep(3);
+            filename = "goblin.txt";
+            if((imagefile = fopen(filename,"r")) == NULL)
+            {
+                fprintf(stderr,"error opening %s\n", filename);
+                return -1;
+            }
+            print_image(imagefile);
+            fclose(imagefile);
+            printf("\nFight the hardest foes...\n");
+            return 3;
         }
         else
         {
