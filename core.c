@@ -5,6 +5,7 @@
 // ahh much better now that the code is reformatted
 
 void print_image(FILE * imagefile);
+int user_prompt();
 
 int main()
 {
@@ -40,7 +41,7 @@ int main()
         //printf("%s",user_input); okay fgets works fine... although strcmp is not happy with how I compare strings now that I use fgets it seems.
         // printf("you wrote: %s", user_input); // although when checked in with printf, it seems that scanf reads everything, not just the first character only... I guess it does not store it as a variable then?
         // FIXED IT :D the "\n" is important in fgets apparently, never forget that!!! never forget the \n!!! hold the fuck up something's wrong here... the ".n" is printed onto a newline? this shit could prove to be a problem in the future, better solve it now. Alright it's fixed! learned how to get rid of the attached newline on the string!
-        if(strcmp(user_input, "Start") == 0) // FUCK YES FINALLY IT CAN START
+        if(strcmp(user_input, "Start") == 0 || strcmp(user_input, "start") == 0) // FUCK YES FINALLY IT CAN START
         {
             isInvalidInput = 0; // do-while condition is set to false, hence ending the loop and achieving what we did with goto. no more spaghetti code that's hard to track, yaaay!!.. it's fucking, what, 2am? im tired..
             // phew... almost lost all progress there, LiveOSes are a dangerous environment to do development on!
@@ -68,7 +69,7 @@ int main()
                 fgets(user_input,255,stdin);
                 //printf("%s.n", user_input);
                 // okay we either use fgets and chop off the attached newline each time, which is a bother, or just include in the newline when comparing strings and only chop off the newline when needed to which'll result in fewer lines of code. latter sounds better, right?
-                if (strcmp(user_input, "Y\n") == 0 || user_input[1] == '\0') // fuck how do I detect if the user just pressed enter, do I just not let them? okay nevermind figured that part out
+                if (strcmp(user_input, "Y\n") == 0 || strcmp(user_input, "y\n") == 0 || user_input[1] == '\0') // fuck how do I detect if the user just pressed enter, do I just not let them? okay nevermind figured that part out
                 {
                     isInvalidInput = 0;
                     char * filename = "mountains.txt";
@@ -84,7 +85,9 @@ int main()
 
                     fclose(imagefile);
                     sleep(3);
-                    printf("\nYou feel a cold breeze. You think of starting a campfire, and go out.");
+                    printf("\nYou feel a cold breeze. You think of starting a campfire, and go out.\n");
+
+                    break;
 
                 }
                 else if (strcmp(user_input, "N\n") == 0 || strcmp(user_input, "n\n") == 0) // I could use strncmp to make the check case-insensitive, which would shorten the code.. but do I really wanna use strncmp? looks like a bother to me
@@ -104,10 +107,9 @@ int main()
                     //sleep(0.5);
                     printf("You have three paths ahead of you.\n");
                     //sleep(0.5);
-the_threeway_path_in_the_woods:
                     do
                     {
-                        printf("Go [L]eft,[R]ight,[S]traight. >||: ");
+                        printf("Go [L]eft,[R]ight,[S]traight, [G]o back. >||: ");
                         fgets(user_input, 255, stdin);
                         //stupid me, I forgot the \n in the user string :DDD such a relief, it is better than an orgasm
                         if(strcmp(user_input, "L\n") == 0 || strcmp(user_input, "l\n") == 0)
@@ -178,15 +180,26 @@ the_threeway_path_in_the_woods:
                                 printf("There's nothing here....\n");
                             }
                         }
+                        else if(strcmp(user_input, "G\n") == 0 || strcmp(user_input,"g\n") == 0)
+                        {
+                            break;
+                        }
                         // else if (user_input[1] == '\0')
                         //   isInvalidInput = 1;
                     }
                     while(1);
-                    printf("\ntest, isInvalidInput is %d", isInvalidInput );
+                  //  printf("\ntest, isInvalidInput is %d", isInvalidInput );
                 }
-                printf("\nhere's where you make a campfire");
+                else
+                {
+                    continue;
+                }
+                break;
             }
             while(isInvalidInput);
+               // printf("\nhere's where you make a campfire");
+            printf("\nYou return with some wood.\n");
+            printf("\n\tSorry, folks. This is the demo for now! Check in later for progression and stay tuned!\n");
             return 0;
         }
 
@@ -271,9 +284,7 @@ the_threeway_path_in_the_woods:
             }
 
             print_image(imagefile);
-
             fclose(imagefile);
-
             sleep(3);
             printf("\nYou take off on an adventure...\n");
             sleep(3);
@@ -288,7 +299,7 @@ the_threeway_path_in_the_woods:
             print_image(imagefile);
 
             fclose(imagefile);
-            sleep(3);
+            //sleep(3);
             printf("\nYou overcome the hardest challenges..!\n");
 
             sleep(3);
@@ -301,8 +312,8 @@ the_threeway_path_in_the_woods:
             print_image(imagefile);
             fclose(imagefile);
             printf("\nFight the hardest foes...\n");
-            filename = "pow!.txt";
             sleep(3);
+            filename = "maze.txt";
             if((imagefile = fopen(filename,"r")) == NULL)
             {
                 fprintf(stderr,"error opening %s\n", filename);
@@ -310,8 +321,26 @@ the_threeway_path_in_the_woods:
             }
             print_image(imagefile);
             fclose(imagefile);
-            printf("\nChallenge yourself in <insert game name here>!\n");
+            printf("\nGet confused a lot...\n");
+            sleep(3);
+            filename = "pow!.txt";
+            if((imagefile = fopen(filename,"r")) == NULL)
+            {
+                fprintf(stderr,"error opening %s\n", filename);
+                return -1;
+            }
+            print_image(imagefile);
+            fclose(imagefile);
+            printf("\nThink your way through fights harder than the existential crisis you have at 3AM strategically!\n");
+            sleep(0.4);
+            printf("Challenge yourself in <insert game name here>!\n");
             isInvalidInput = 1;
+        }
+        else if(strcmp(user_input, "exit") == 0)
+        {
+            printf("\nThank you for playing!\n");
+            return 5;
+
         }
         else
         {
@@ -332,3 +361,14 @@ void print_image(FILE * imagefile)
     while(fgets(read_string,sizeof(read_string),imagefile) != NULL)
         printf("%s",read_string);
 }
+
+/*
+int user_prompt()
+{
+    static char user_input[255];
+    printf("\n>||: ");                  To be used later on... needs a lot of refactoring for the code and I can't do that now
+    fgets(user_input,255,stdin);
+    printf("\n%s", user_input);
+
+
+}*/
