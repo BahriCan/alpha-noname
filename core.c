@@ -12,6 +12,7 @@ int main()
     // a new version, we'll be using fgets() instead of scanf() now. i see that it is dangerous...
     int monster_alpha;
     int player_health;
+    int player_defense;
     int punch_attack_power;
     char character_name[255]; // SHIIIT IF I DO NOT PROVIDE A VALUE IT'LL NEVER BE BUFFER OVERRUN FUCK YEAAH
     // never mind.. i have to provide a value for single-dimensional arrays. OR I COULD JUST = TO FGETS... nah not gonna happen :/
@@ -25,9 +26,10 @@ int main()
     //int isInvalidInput2 = 1; // another variable bcuz i cant use the same one in nested do-while loops
     monster_alpha = 15;
     player_health = 200;
+    player_defense = 10;
     punch_attack_power = 5;
 
-    printf("Welcome to the alpha version of <insert game name here>.\nCOPYRIGHT u/Bahrican798.\n");
+    printf("Welcome to the alpha version of <insert game name here>.\nCOPYRIGHT u/Bahrican798.\n"); // I gotta find a name, man... Zagros maybe? does a game with that name exist?
     printf("I know, it's not much, obviously. This is as much as I can get done in this environment...\n");
     char user_input[255];
     printf("===================================================\n");
@@ -84,8 +86,23 @@ int main()
                     print_image(imagefile);
 
                     fclose(imagefile);
-                    sleep(3);
+                    sleep(1);
                     printf("\nYou feel a cold breeze. You think of starting a campfire, and go out.\n");
+                    sleep(6); // something's disturbing about these sleep statements..
+                    filename = "snowing.txt";
+                    if((imagefile = fopen(filename,"r")) == NULL)
+                    {
+                        fprintf(stderr,"error opening %s\n",filename);
+                        return -1;
+                    }
+                    print_image(imagefile);
+                    fclose(imagefile);
+                    printf("\nIt's snowing.\n");
+                    sleep(4);
+                    // perhaps give the player a jacket/coat? inside the cave perhaps?
+                    printf("You find 4 pieces of wood and decide to go back, it is too cold to be outside right now.\n");
+                    sleep(4);
+                    user_wood_amount += 4;
 
                     break;
 
@@ -95,18 +112,18 @@ int main()
 
                     isInvalidInput = 0;
                     printf("You decided not to go inside the cave.\n");
-                    //sleep(3);
+                    sleep(3);
                     printf("It's getting cold... You imagine a warm campfire, and set out to get some firewood.\n");
                     printf(".\n");
-                    // sleep(1);
+                    sleep(1);
                     printf("..\n");
-                    //sleep(1);
+                    sleep(1);
                     printf("...\n");
-                    //sleep(5);
+                    sleep(5);
                     printf("You wander in the forest, searching for some wood.\n");
-                    //sleep(0.5);
+                    sleep(0.5);
                     printf("You have three paths ahead of you.\n");
-                    //sleep(0.5);
+                    sleep(0.5);
                     do
                     {
                         printf("Go [L]eft,[R]ight,[S]traight, [G]o back. >||: ");
@@ -198,7 +215,68 @@ int main()
             }
             while(isInvalidInput);
                // printf("\nhere's where you make a campfire");
-            printf("\nYou return with some wood.\n");
+            printf("\nYou return to the cave.\n");
+            sleep(3);
+            if(user_wood_amount <= 2)
+            {
+                printf("You have %d piece(s) of wood. You make a small fire, but it's shortlived.\n");
+                sleep(1);
+                printf("You decide to sleep while it's still feeling warm enough.\n");
+                sleep(0.5);
+                printf(".");
+                sleep(1);
+                printf(".");
+                sleep(1);
+                printf(".");
+                printf("Your defense dropped by 5. You got a cold, your back hurts because you sleeped on the cold, hard ground.\n");// i can either make a boolean variable, check this in later outside of the campfire scene, or print it out inside here...
+                break;
+            }
+            if(user_wood_amount > 2 && user_wood_amount <= 5)
+            {
+                printf("You throw in some sticks to get the fire started.\n");
+                sleep(3);
+                printf("The cave has lightened up, and it's quite warm now.\n");
+                sleep(5);
+                printf("You feel warm and cozy.\n");
+                sleep(2);
+                printf("It's midnight.\n");
+                sleep(2);
+                printf("You decide to take a short nap. Be on the lookout for the fire.\n");
+                sleep(3);
+                printf(".");
+                sleep(3);
+                printf(".");
+                sleep(3);
+                printf(".");
+                break;
+            }
+            if(user_wood_amount = 6)
+            {
+                printf("You come back with lots of wood in your arms.\n");
+                sleep(4);
+                char * filename = "campfire.txt";
+                FILE * imagefile = NULL;
+                if((imagefile = fopen(filename,"r")) == NULL)
+                {
+                    fprintf(stderr,"error opening %s",filename);
+                    return -1;
+                }
+                print_image(imagefile);
+                fclose(imagefile);
+                sleep(1);
+                printf("\nYou make a fire. It's damn cozy now, and bright.\n");
+                sleep(3);
+                printf("You decide to sleep, the fire should last until morning sun.\n");
+                sleep(4); // something is reaally wrong with these sleep statements....
+                printf(".\n");
+                sleep(2);
+                printf("..\n");
+                sleep(2);
+                printf("...\n");
+                sleep(5);
+                player_defense += 5;
+                printf("\nYour defense has increased by 5! You did morning stretches and had a good sleep.\n");
+            }
             printf("\n\tSorry, folks. This is the demo for now! Check in later for progression and stay tuned!\n");
             return 0;
         }
@@ -323,6 +401,16 @@ int main()
             fclose(imagefile);
             printf("\nGet confused a lot...\n");
             sleep(3);
+            filename = "snowing.txt";
+            if((imagefile = fopen(filename,"r")) == NULL)
+            {
+                fprintf(stderr,"error opening %s\n", filename);
+                return -1;
+            }
+            print_image(imagefile);
+            fclose(imagefile);
+            printf("\nGo through cold, harsh nights...\n");
+            sleep(3);
             filename = "pow!.txt";
             if((imagefile = fopen(filename,"r")) == NULL)
             {
@@ -331,7 +419,7 @@ int main()
             }
             print_image(imagefile);
             fclose(imagefile);
-            printf("\nThink your way through fights harder than the existential crisis you have at 3AM strategically!\n");
+            printf("\nThink your way through fights harder than the existential crisis you have at 3AM strategically! Every choice you make affects the game!\n");
             sleep(0.4);
             printf("Challenge yourself in <insert game name here>!\n");
             isInvalidInput = 1;
