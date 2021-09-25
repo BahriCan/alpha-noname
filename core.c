@@ -23,7 +23,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
     int straight_path_wood_is_taken = 0;
     int user_wood_amount = 0;
     int isInvalidInput = 1; // this variable is to detect whether or not the user entered a correct value, it'll turn into a 0 and be considered false, and end the loop and continue off of that IF/ELSE block.
-    //int isInvalidInput2 = 1; // another variable bcuz i cant use the same one in nested do-while loops
+    //int isInvalidInput2 = 1; // another variable bcuz i cant use the same one in nested do-while loops/// DEPRECATED VARIABLE, VARIABLES NO LONGER NEEDED FOR DO-WHILE LOOPS
     monster_alpha = 15;
     player_health = 200;
     player_defense = 10;
