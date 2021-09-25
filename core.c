@@ -28,12 +28,13 @@ int main()
     player_health = 200;
     player_defense = 10;
     punch_attack_power = 5;
-    printf("%d wood amount",user_wood_amount);
 
     printf("Welcome to the alpha version of <insert game name here>.\nCOPYRIGHT u/Bahrican798.\n"); // I gotta find a name, man... Zagros maybe? does a game with that name exist?
     printf("I know, it's not much, obviously. This is as much as I can get done in this environment...\n");
+    printf("It is recommended that you play this game in fullscreen.\n");
     char user_input[255];
     printf("===================================================\n");
+    printf("\t\t<insert game name here>\t\t\n");
     printf("\t\t TYPE \"Start\" TO PLAY\t\t\t\n");
     printf("===================================================\n");
     do
@@ -44,7 +45,7 @@ int main()
         //printf("%s",user_input); okay fgets works fine... although strcmp is not happy with how I compare strings now that I use fgets it seems.
         // printf("you wrote: %s", user_input); // although when checked in with printf, it seems that scanf reads everything, not just the first character only... I guess it does not store it as a variable then?
         // FIXED IT :D the "\n" is important in fgets apparently, never forget that!!! never forget the \n!!! hold the fuck up something's wrong here... the ".n" is printed onto a newline? this shit could prove to be a problem in the future, better solve it now. Alright it's fixed! learned how to get rid of the attached newline on the string!
-        if(strcmp(user_input, "Start") == 0 || strcmp(user_input, "start") == 0) // FUCK YES FINALLY IT CAN START
+        if(strcmp(user_input,"Start") == 0 || strcmp(user_input, "start") == 0)// FUCK YES FINALLY IT CAN START
         {
             isInvalidInput = 0; // do-while condition is set to false, hence ending the loop and achieving what we did with goto. no more spaghetti code that's hard to track, yaaay!!.. it's fucking, what, 2am? im tired..
             // phew... almost lost all progress there, LiveOSes are a dangerous environment to do development on!
@@ -54,7 +55,7 @@ int main()
             character_name[strcspn(character_name, "\n")] = 0;
             printf("Your name is %s.", character_name);
             sleep(1);
-            printf("Welcome... to a new world.\n");
+            printf(" Welcome... to a new world.\n");
             sleep(1.5);
             printf("You're wondering around.\n");
             sleep(1.5);
@@ -64,7 +65,7 @@ int main()
             isInvalidInput = 1;
             do
             {
-                printf("You stumble upon a little cave. Go inside? Y/n >||: ");
+                printf("You stumble upon a little cave. Go inside? [Y/n] >||: ");
                 // I need to find a way to print [], (), {}....
                 // well making a string variable and putting '[' in it and printing it via printf %s IS an option... but not efficient. There MUST be a way to just print those characters without a hassle!
                 // I gotta get some work done on this...
@@ -135,7 +136,7 @@ int main()
                             printf("\nYou chose to go left.\n");
                             if(left_path_wood_is_taken == 0)
                             {
-                                printf("You found 2 pieces of wood! And some blood stains...\n");
+                                printf("You found 2 pieces of wood! And some blood stains...\n"); // we can connect this to the story later on.. use left_path_wood_is_taken to check if this place has been visited, to ensure the player saw the blood stains. Then type in "The blood in the forest must belong to this wounded man..." Rest is a secret ;) wait until the game comes out in a full demo for it
                                 left_path_wood_is_taken = 1;
                                 user_wood_amount += 2;
                             }
@@ -283,7 +284,7 @@ int main()
 
         else if (strcmp(user_input, "easter") == 0) // Fuck man I can't put in spaces there... I'll figure that out later, I need to make a release now
         {
-            isInvalidInput = 0; // sets the do-while condition to false, ending the loop
+            //isInvalidInput = 0; // sets the do-while condition to false, ending the loop
             printf("Welcome to the pre-alpha release. This command is only known by those who observe the source code :D\n"); // Fuck I can't make a smiley ( ;) )
             printf("To do stuff:\n");
             printf("Ideas to be added:\n");
@@ -303,7 +304,7 @@ int main()
             printf("-Stats, probably. This one didn't go well apparently in C#. I'll attempt it here, what could go wrong? Let the user see their stats, health, exp, level etc.\n");
             printf("-Setting max values for stuff like player_health, if it exceeds it's max value, make it equal to it's max value again. Perhaps I'll use a separate, untouched variable for this called 'max_health'.\n");
             printf("-A start menu wouldn't be so bad, like the ncurses menus in shell scripts!\n");
-            printf("-Let the user choose their character's name.\n");
+            //printf("-Let the user choose their character's name.\n");
             printf("-Send the user back to the prompt if they input something not related or whatever.\n");
             printf("- Add an inventory command, the player can check their inventory and see what they have at any time. Make it a function perhaps? check structs as well\n");
             printf("-Add an option to save the game... I don't know how to do that, I'll do it but not today.\n");
@@ -312,18 +313,17 @@ int main()
             //printf("Find a way to printf the following character, it's in the source code. Here I'll even print it here, BUT this is a troublesome way to print out a '%s'.\n", special_character);
             //printf("- DONT use goto! Apparently it's bad practice... find an alternative. Should be worth it, especially when you look at the old CS source code.. Damn that sure was one helluva spaghetti code.\n");
             printf("-Give the user a limited inventory, like in uhh.. umm.... i dont fucking remember the game name just give the user a small inventory and items around them to pick up/drop.\n");
-            printf("-Either use command line options like --start, --debug and whatever, or use an in-game prompt like we are now. u/Urthemando_Mod looks like he is thirsty for cli options, so...\n");
+            printf("-Either use command line options like --start, --debug and whatever, or use an in-game prompt like we are now.\n");
             printf("-Perhaps make the variables an array? IF we ever add difficulty options to this, that could be useful to load in different values, e.g 10 damage for a monster in easy mode, 15 in normal, 20 in expert, 300/200/150 player health etc.\n");
             //printf("-Check fgets, scanf seems to be a pain...\n");
             printf("-The save/load feature can be a function!\n");
-            printf("-Hold the fuck up this is getting more and more complicated.. If I am going to be writing the same scenario again in another decision later on, this'll double the amount of code and the time to write it! There MUST be a way to join the both ends into the same route... I need to get out of the if statements.. Should we use goto/longjmp? I think so..");
-            printf("-Add defense points too! Oh and have a multiplier for the attack powers! Like in pokémon, but simplified!! Your attack power will be multiplied by a random number between 0.5 and 1.0!! so exciting maan i love programming!!!!1!");
+            //printf("-Hold the fuck up this is getting more and more complicated.. If I am going to be writing the same scenario again in another decision later on, this'll double the amount of code and the time to write it! There MUST be a way to join the both ends into the same route... I need to get out of the if statements.. Should we use goto/longjmp? I think so..");
+            printf("-Add defense points too! Oh and have a multiplier for the attack powers! Like in pokémon, but simplified!! Your attack power will be multiplied by a random number between 0.5 and 1.0!!\n");
             printf("Added/fixed stuff:\n");
             printf("+Finally stopped using goto, I am using for loops instead now that for stopped being such a dick and started working...\n");
             printf("+Got rid of scanf, using fgets now.\n");
             printf("+Added sleep so that it waits between printing stuff!\n");
             printf("This is all for now I guess. New ideas come by every now and then, which I'll note down here in this 'Easter Egg' :P.\n");
-            return 1;
 
         }
         else if(strcmp(user_input, "test") == 0)
