@@ -7,7 +7,7 @@
 void print_image(FILE * imagefile);
 int user_prompt();
 
-int main()
+int main() // add in command-line options with int argc, char *argv[]... it'll need a refactoring
 {
     // a new version, we'll be using fgets() instead of scanf() now. i see that it is dangerous...
     int monster_alpha;
@@ -206,7 +206,7 @@ int main()
                         //   isInvalidInput = 1;
                     }
                     while(1);
-                  //  printf("\ntest, isInvalidInput is %d", isInvalidInput );
+                    //  printf("\ntest, isInvalidInput is %d", isInvalidInput );
                 }
                 else
                 {
@@ -215,7 +215,7 @@ int main()
                 break;
             }
             while(isInvalidInput);
-               // printf("\nhere's where you make a campfire");
+            // printf("\nhere's where you make a campfire");
             printf("\nYou return to the cave.\n");
             sleep(3);
             if(user_wood_amount <= 2)
@@ -231,7 +231,7 @@ int main()
                 printf("...\n");
                 sleep(1);
                 printf("Your defense dropped by 5. You got a cold and your back hurts because you sleeped on the cold, hard ground.\n");// i can either make a boolean variable, check this in later outside of the campfire scene, or print it out inside here...
-                player_defense -= 5;
+                player_defense -= 5; // I will forgive the player if they decide to do a morning run and warm up. (player_defense += 5;)
             }
             if(user_wood_amount > 2 && user_wood_amount <= 5)
             {
