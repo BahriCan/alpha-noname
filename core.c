@@ -220,15 +220,16 @@ int main()
             if(user_wood_amount <= 2)
             {
                 printf("You have %d piece(s) of wood. You make a small fire, but it's shortlived.\n",user_wood_amount);
-                sleep(1);
+                sleep(3);
                 printf("You decide to sleep while it's still feeling warm enough.\n");
-                sleep(0.5);
-                printf(".");
+                sleep(2);
+                printf(".\n");
+                sleep(2);
+                printf("..\n");
+                sleep(2);
+                printf("...\n");
                 sleep(1);
-                printf(".");
-                sleep(1);
-                printf(".");
-                printf("Your defense dropped by 5. You got a cold, your back hurts because you sleeped on the cold, hard ground.\n");// i can either make a boolean variable, check this in later outside of the campfire scene, or print it out inside here...
+                printf("Your defense dropped by 5. You got a cold and your back hurts because you sleeped on the cold, hard ground.\n");// i can either make a boolean variable, check this in later outside of the campfire scene, or print it out inside here...
                 player_defense -= 5;
             }
             if(user_wood_amount > 2 && user_wood_amount <= 5)
