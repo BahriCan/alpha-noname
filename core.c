@@ -28,6 +28,7 @@ int main()
     player_health = 200;
     player_defense = 10;
     punch_attack_power = 5;
+    printf("%d wood amount",user_wood_amount);
 
     printf("Welcome to the alpha version of <insert game name here>.\nCOPYRIGHT u/Bahrican798.\n"); // I gotta find a name, man... Zagros maybe? does a game with that name exist?
     printf("I know, it's not much, obviously. This is as much as I can get done in this environment...\n");
@@ -101,8 +102,7 @@ int main()
                     sleep(4);
                     // perhaps give the player a jacket/coat? inside the cave perhaps?
                     printf("You find 4 pieces of wood and decide to go back, it is too cold to be outside right now.\n");
-                    sleep(4);
-                    user_wood_amount += 4;
+                    user_wood_amount = user_wood_amount + 4;
 
                     break;
 
@@ -135,7 +135,7 @@ int main()
                             printf("\nYou chose to go left.\n");
                             if(left_path_wood_is_taken == 0)
                             {
-                                printf("You found 2 pieces of wood!\n");
+                                printf("You found 2 pieces of wood! And some blood stains...\n");
                                 left_path_wood_is_taken = 1;
                                 user_wood_amount += 2;
                             }
@@ -219,7 +219,7 @@ int main()
             sleep(3);
             if(user_wood_amount <= 2)
             {
-                printf("You have %d piece(s) of wood. You make a small fire, but it's shortlived.\n");
+                printf("You have %d piece(s) of wood. You make a small fire, but it's shortlived.\n",user_wood_amount);
                 sleep(1);
                 printf("You decide to sleep while it's still feeling warm enough.\n");
                 sleep(0.5);
@@ -230,7 +230,6 @@ int main()
                 printf(".");
                 printf("Your defense dropped by 5. You got a cold, your back hurts because you sleeped on the cold, hard ground.\n");// i can either make a boolean variable, check this in later outside of the campfire scene, or print it out inside here...
                 player_defense -= 5;
-                break;
             }
             if(user_wood_amount > 2 && user_wood_amount <= 5)
             {
@@ -244,14 +243,13 @@ int main()
                 sleep(2);
                 printf("You decide to take a short nap. Be on the lookout for the fire.\n");
                 sleep(3);
-                printf(".");
-                sleep(3);
-                printf(".");
-                sleep(3);
-                printf(".");
-                break;
+                printf(".\n");
+                sleep(2);
+                printf("..\n");
+                sleep(2);
+                printf("...\n");
             }
-            if(user_wood_amount = 6)
+            if(user_wood_amount == 6)
             {
                 printf("You come back with lots of wood in your arms.\n");
                 sleep(4);
