@@ -14,13 +14,14 @@ int user_prompt()
     fgets(user_input,255,stdin); // oh yeah... only for user_input, not character_name
 }
 //now.. what were we doing? oh yeah.. the user stat function. and structures... i think that's where we left off
-typedef struct{
+typedef struct
+{
     char * name;
     int health_points;
     int defense_points;
     int attack_points;
     int mana_points;
-}basic_character_structure;
+} basic_character_structure;
 
 int main() // add in command-line options with int argc, char *argv[]... it'll need a refactoring
 {
@@ -56,7 +57,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
     printf("Welcome to the alpha version of <insert game name here>.\nCOPYRIGHT u/Bahrican798.\n"); // I gotta find a name, man... Zagros maybe? does a game with that name exist?
     printf("I know, it's not much, obviously. This is as much as I can get done in this environment...\n");
     printf("It is recommended that you play this game in fullscreen.\n");
-   // char user_input[255];
+    // char user_input[255];
     printf("===================================================\n");
     printf("\t\t<insert game name here>\t\t\n");
     printf("\t\t TYPE \"Start\" TO PLAY\t\t\t\n");
@@ -391,7 +392,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                 }
 
             }
-*/
+            */
             /*user_prompt();
             if(strcmp(user_input, "tes\n") == 0)
             {
