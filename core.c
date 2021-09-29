@@ -145,7 +145,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                             if(left_path_wood_is_taken == 0)
                             {
                                 printf("You found 2 pieces of wood! And some blood stains...\n"); // we can connect this to the story later on.. use left_path_wood_is_taken to check if this place has been visited, to ensure the player saw the blood stains. Then type in "The blood in the forest must belong to this wounded man..." Rest is a secret ;) wait until the game comes out in a full demo for it
-                        sleep(2);
+                                sleep(2);
                                 do
                                 {
                                     printf("There's a jacket on the blood-stained rock. Take it? [Y/n] ");
@@ -160,13 +160,13 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                                             if (strcmp(user_input, "y\n") == 0 || user_input[1] == '\0')
                                             {
                                                 printf("You wear the jacket.\n");
-                                                                        sleep(3);
+                                                sleep(3);
                                                 printf(".\t");
-                                                                     sleep(2);
+                                                sleep(2);
                                                 printf(".\t");
-                                                                sleep(2);
+                                                sleep(2);
                                                 printf(".\n");
-                                                                sleep(3); // huh? what was i doing again?
+                                                sleep(3); // huh? what was i doing again?
                                                 player_is_wearing_jacket = 1;
                                                 printf("You start feeling warmer.\n");
                                                 break;
