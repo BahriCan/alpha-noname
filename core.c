@@ -69,13 +69,13 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             // we could perhaps make this user_prompt() function receive arguments and replace the fgets(user_input,255,stdin) with something else with those arguments..
             player.name[strcspn(player.name, "\n")] = 0; // i hope this works... if i put it in user_prompt() I'll never need to remember the \n again! I don't see the issue here... I'll do it after I think about the possible outcomes
             printf("Your name is %s.", player.name);
-            //sleep(1); okay screw the sleep lines for testing purposes
+            sleep(1); //okay screw the sleep lines for testing purposes
             printf(" Welcome... to a new world.\n");
-            //sleep(1.5);
+            sleep(1.5);
             printf("You're wondering around.\n");
-            //sleep(1.5);
+            sleep(1.5);
             printf("You keep walking for hours on end.\n");
-            //sleep(3);
+            sleep(3);
             printf("It's getting late...\n");
             do // im so sleepy lloll ..... apparently there is alternatives to goto.. stupid fucking book telling me to use goto...
             {
@@ -101,7 +101,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                     fclose(imagefile);
                     sleep(1);
                     printf("\nYou feel a cold breeze. You think of starting a campfire, and go out.\n");
-                    //      sleep(6); // something's disturbing about these sleep statements..
+                    sleep(6); // something's disturbing about these sleep statements..
                     filename = "snowing.txt";
                     if((imagefile = fopen(filename,"r")) == NULL)
                     {
@@ -122,14 +122,14 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                 else if (strcmp(user_input, "n\n") == 0) // I could use strncmp to make the check case-insensitive, which would shorten the code.. but do I really wanna use strncmp? looks like a bother to me
                 {
                     printf("You decided not to go inside the cave.\n");
-                    //  sleep(3);
+                    sleep(3);
                     printf("It's getting cold... You imagine a warm campfire, and set out to get some firewood.\n");
                     printf(".\n");
-                    //sleep(1);
+                    sleep(1);
                     printf("..\n");
-                    //sleep(1);
+                    sleep(1);
                     printf("...\n");
-                    //    sleep(5);
+                    sleep(5);
                     printf("You wander in the forest, searching for some wood.\n");
                     sleep(0.5);
                     printf("You have three paths ahead of you.\n");
@@ -145,7 +145,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                             if(left_path_wood_is_taken == 0)
                             {
                                 printf("You found 2 pieces of wood! And some blood stains...\n"); // we can connect this to the story later on.. use left_path_wood_is_taken to check if this place has been visited, to ensure the player saw the blood stains. Then type in "The blood in the forest must belong to this wounded man..." Rest is a secret ;) wait until the game comes out in a full demo for it
-                                //           sleep(2);
+                        sleep(2);
                                 do
                                 {
                                     printf("There's a jacket on the blood-stained rock. Take it? [Y/n] ");
@@ -160,13 +160,13 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                                             if (strcmp(user_input, "y\n") == 0 || user_input[1] == '\0')
                                             {
                                                 printf("You wear the jacket.\n");
-                                                //                         sleep(3);
+                                                                        sleep(3);
                                                 printf(".\t");
-                                                //                       sleep(2);
+                                                                     sleep(2);
                                                 printf(".\t");
-                                                //                     sleep(2);
+                                                                sleep(2);
                                                 printf(".\n");
-                                                //                   sleep(3); // huh? what was i doing again?
+                                                                sleep(3); // huh? what was i doing again?
                                                 player_is_wearing_jacket = 1;
                                                 printf("You start feeling warmer.\n");
                                                 break;
@@ -310,30 +310,30 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                 }
                 print_image(imagefile);
                 fclose(imagefile);
-                //sleep(1);
+                sleep(1);
                 printf("\nYou make a fire. It's damn cozy now, and bright.\n");
-                //sleep(3);
+                sleep(3);
                 printf("You decide to sleep, the fire should last until morning sun.\n");
-                // sleep(4); // something is reaally wrong with these sleep statements....
+                sleep(4); // something is reaally wrong with these sleep statements....
                 printf(".\n");
-                // sleep(2);
+                sleep(2);
                 printf("..\n");
-                //  sleep(2);
+                sleep(2);
                 printf("...\n");
-                // sleep(5);
+                sleep(5);
                 player.defense_points += 5;
                 printf("You wake up.\n");
                 printf("\nYour defense has increased by 5! You did morning stretches and had a good sleep.\n");
             }
             // owh... my brain..
             printf("It's still snowing outside.\n");
-            //   sleep(3);
+            sleep(3);
             printf("You look at your campfire.\n");
-            //  sleep(3);
+            sleep(3);
             printf("It's out, unfortunately.\n");
-            //sleep(3);
+            sleep(3);
             printf("You are out of wood as well. Not much to do besides stay in right now and wait the snow out.\n");
-            //sleep(5);
+            sleep(5);
             do
             {
                 printf("What will you do? [W]ait out in the cave / I love [e]xploring ");
