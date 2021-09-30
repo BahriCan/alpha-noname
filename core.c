@@ -531,7 +531,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             printf("It's hot. The fireplace is steaming!\n"); // should I put this BEFORE or AFTER the ASCII image... eh it's fine like this for now
             sleep(3);
             filename = "fireplace.txt";
-            if((imagefile = fopen(filename,"r")) == 0)
+            if((imagefile = fopen(filename,"r")) == NULL)
             {
                 fprintf(stderr,"Error, where's %s?",filename);
                 return -1;
