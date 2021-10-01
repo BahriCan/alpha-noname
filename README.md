@@ -1,5 +1,5 @@
 # alpha-noname
-A stupid little game I'm making, hopefully will be a full-blown 2D game in the future.
+A little game that I am spinning up! Our hero gets lost somehow, and finds himself in a troubling situation. What adventures await him in this strange world? Wanna find out? Play it! No spoilers here :D Support it if you want more of it!
 
 # This game is currently Linux-only.
 
