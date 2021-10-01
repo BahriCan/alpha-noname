@@ -562,7 +562,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
 
         }
 
-        else if (strcmp(user_input, "easter") == 0) // Fuck man I can't put in spaces there... I'll figure that out later, I need to make a release now
+        else if (strcmp(user_input, "easter\n") == 0) // Fuck man I can't put in spaces there... I'll figure that out later, I need to make a release now
         {
             //isInvalidInput = 0; // sets the do-while condition to false, ending the loop
             printf("Welcome to the pre-alpha release. This command is only known by those who observe the source code :D\n"); // Fuck I can't make a smiley ( ;) )
