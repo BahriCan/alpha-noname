@@ -3,4 +3,7 @@ A little game that I am spinning up! Our hero gets lost somehow, and finds himse
 
 # This game is currently Linux-only.
 
-If you want to see it on Windows (and/or maybe MacOS), support me over on Patreon so I can replace my broken drive!
+If you want to see it on Windows, support me over on Patreon so I can replace my broken drive!
+
+|Alternatively:
+You could ```#include <windows.h>``` and replace all the sleep() lines with Sleep();, that should work it out for Windows.
