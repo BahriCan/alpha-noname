@@ -8,7 +8,7 @@ If you want to see it on Windows, support me over on Patreon so I can replace my
 |Alternatively:
 You could ```#include <windows.h>``` and replace all the sleep() lines with Sleep();, that should work it out for Windows. Or who knows, maybe it already works on Windows.. I wouldn't, I don't have a Windows install :P
 
-#How to play?
+# How to play?
 
 Quite simple, actually. Fire up a terminal and clone this repo-
 
