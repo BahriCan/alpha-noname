@@ -6,4 +6,4 @@ A little game that I am spinning up! Our hero gets lost somehow, and finds himse
 If you want to see it on Windows, support me over on Patreon so I can replace my broken drive!
 
 |Alternatively:
-You could ```#include <windows.h>``` and replace all the sleep() lines with Sleep();, that should work it out for Windows.
+You could ```#include <windows.h>``` and replace all the sleep() lines with Sleep();, that should work it out for Windows. Or who knows, maybe it already works on Windows.. I wouldn't, I don't have a Windows install :P
