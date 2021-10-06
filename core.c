@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #define MAX_LEN 128
+// I'm at a fucking block right now.. I really don't know what to do or what to add to the game
 // just a few more cleanups, then restructing the code to work with just lowercase input.
 // We can use this typedef struct for monsters and the player(s), it'll especially be useful if we ever put in a multiplayer mode.
 // Tomorrow morning we'll be doing a cleanup now that the isInvalidInput variable has been deprecated and the user prompt is a function now..
