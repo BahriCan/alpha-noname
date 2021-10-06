@@ -20,7 +20,7 @@ typedef struct basic_character_structure
     int defense_points;
     int attack_points;
     int mana_points;
-    char has_equipped; //??? yeah as I guessed- I still haven't mapped the exact idea in my mind to a blank point... it's deep down there somewhere- I just can't reach to it.. my head hurts so much
+    char *has_equipped; //??? yeah as I guessed- I still haven't mapped the exact idea in my mind to a blank point... it's deep down there somewhere- I just can't reach to it.. my head hurts so much
 } basic_character_structure;
 
 typedef struct weapon
@@ -674,9 +674,10 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
         {
             printf("\nStick.power = %d\n Player AP: %d",stick.power, player.attack_points);
             //user_prompt(); // now what was I gonna do again.. damn it's hard to follow myself
-            // player.has_equipped = stick;
-            player.attack_points = *&player.attack_points + *&stick.power; // even the thing that I think would work does not... | point and dereference the struct variables?
+            player.has_equipped = stick.name; //strange... it seems to have calmed down now
+            player.attack_points += stick.power; // even the thing that I think would work does not... | point and dereference the struct variables?
             printf("\nAP: %d", player.attack_points); // it works! now to hard code it in...
+            printf("\nHE: %s", player.has_equipped);
             // printf("\nPlayer has equipped: %s\nPlayer's attack points: %d",player.has_equipped,player.attack_points);
 
             /* printf("Test input >> ");
