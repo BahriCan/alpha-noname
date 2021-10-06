@@ -475,7 +475,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                     {
                         printf("You decided to just hold on to the stick.\n"); // this will affect the game somehow... has stick && is not equipped will result in the player getting access to a special area ;)
                     }
-                    }while(1);
+
                     else if(strcmp(user_input, "stats\n") == 0) // actually, I might not even have to use strcmp for this- then again, it didn't work like it did in C#...
                     {
                         printf("Weapon name: %s", stick.name);
@@ -483,9 +483,13 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                         filename = "stick.txt"; // im not so sure about having global variables... maybe a static one instead?
                         if((imagefile = fopen(filename, "r")) == NULL)
                         {
-
+                            fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                         }
+                        print_image(imagefile);
+                        fclose(imagefile);
+                        sleep(2);
                     }
+                    }while(1);
                     break;
                 }
                 else if(strcmp(user_input, "n\n") == 0)
@@ -572,7 +576,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             filename = "fireplace.txt";
             if((imagefile = fopen(filename,"r")) == NULL)
             {
-                fprintf(stderr,"Error, where's %s?",filename);
+                fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                 return -1;
             }
             print_image(imagefile);
@@ -597,8 +601,6 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             sleep(8); // yeah looks pretty much done to me. I'll test out the new parts, then the whole game to see if there are any holes in it, then release this demo!
             // weeell... "the sunshine hitting on your face" so this part wouldn't really match up with it. I can make an exception, find a point to merge the both of the choices properly, but meh that would require me to rewrite the entire story which I'm not interested in
             printf("\n\tSorry, folks. This is the demo for now! Check in later for progression and stay tuned!\n");
-            return 0;
-
         }
 
         else if (strcmp(user_input, "easter\n") == 0) // Fuck man I can't put in spaces there... I'll figure that out later, I need to make a release now
