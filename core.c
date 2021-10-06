@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <ctype.h>
 #define MAX_LEN 128
-// I'm at a fucking block right now.. I really don't know what to do or what to add to the game
 // just a few more cleanups, then restructing the code to work with just lowercase input.
 // We can use this typedef struct for monsters and the player(s), it'll especially be useful if we ever put in a multiplayer mode.
 // Tomorrow morning we'll be doing a cleanup now that the isInvalidInput variable has been deprecated and the user prompt is a function now..
@@ -12,14 +11,23 @@ char user_input[255]; // now to refactor the code...
 void print_image(FILE * imagefile);
 void user_prompt();
 //now.. what were we doing? oh yeah.. the user stat function. and structures... i think that's where we left off
-typedef struct
+typedef struct basic_character_structure
 { // but I dont understand... this variable was a pointer the whole time! why did it break yesterday after i deleted multiple commented out code blocks?
     char name[255]; // this motherfucker right here fucks it all up... or as far as i understand it. pointers man... welp apparently the guy on stackoverflow cursed me with having to use malloc() for this name variable. this is my life now
     int health_points; // do max point versions of these variables as well!
     int defense_points;
     int attack_points;
     int mana_points;
+    char has_equipped; //??? yeah as I guessed- I still haven't mapped the exact idea in my mind to a blank point... it's deep down there somewhere- I just can't reach to it.. my head hurts so much
 } basic_character_structure;
+
+typedef struct weapon
+{
+    char *name;
+    int power;
+    int has_this_weapon;
+    int is_equipped; // how am I gonna pull this off though..
+} weapon;
 
 
 // now to add in a function to print the enemy's status. the function will take an argument, and it'll print the status of a certain thing depending on the argument it receives. it'll also turn a value true (if the user already fought that monster before), which'll be useful for the free-fighting mode
@@ -39,12 +47,18 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
     int player_is_wearing_jacket = 0;
     int player_has_stick = 0; // yeah it's getting really messy up here and unmaintainable. I gotta think of a clever solution if I wanna use booleans to check for the current state of stuff
     // man I said a clean-up... not more messy, deprecated, commented out code!! | I should've tested before deprecating random shit.
+    weapon stick;
+    stick.power = 5;
+    stick.name = "Stick";
+    stick.has_this_weapon = 0; // does NOT have weapon, now
+    stick.is_equipped = 0; // oh that's better.. I cleared up my head! | for the time being, I'll code this in manually until I can find a more "dynamic" way| with the new approach, the player will be able to print their stats any time they want/need to, and will be able to change equipment at will- unlike what I'll be doing now. Again, this is just an alpha release, more will be available in a fully functional v1.1
     basic_character_structure player;
     player.attack_points = 10;
     player.defense_points = 20;
     player.health_points = 200;
     player.mana_points = 30;
     player.name; // curious... what if i... nah didn't work
+    char * filename;
     // yeah player.name comes in after the game starts and the user chooses a name. | I LITERALLY TESTED IT BEFORE WHY DOESN'T THE SAME THING WORK NOW
 
     printf("Welcome to the alpha version of <insert game name here>.\nCOPYRIGHT u/Bahrican798.\n"); // I gotta find a name, man...
@@ -97,12 +111,12 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                 // okay we either use fgets and chop off the attached newline each time, which is a bother, or just include in the newline when comparing strings and only chop off the newline when needed to which'll result in fewer lines of code. latter sounds better, right?
                 if (strcmp(user_input, "y\n") == 0 || user_input[1] == '\0') // fuck how do I detect if the user just pressed enter, do I just not let them? okay nevermind figured that part out
                 {
-                    char * filename = "mountains.txt";
+                    filename = "mountains.txt";
                     FILE * imagefile = NULL;
 
                     if((imagefile = fopen(filename,"r")) == NULL)
                     {
-                        fprintf(stderr,"error opening %s\n",filename);
+                        fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                         return -1;
                     }
 
@@ -115,7 +129,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                     filename = "snowing.txt";
                     if((imagefile = fopen(filename,"r")) == NULL)
                     {
-                        fprintf(stderr,"error opening %s\n",filename);
+                        fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                         return -1;
                     }
                     print_image(imagefile);
@@ -328,7 +342,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                 FILE * imagefile = NULL;
                 if((imagefile = fopen(filename,"r")) == NULL)
                 {
-                    fprintf(stderr,"error opening %s",filename);
+                    fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                     return -1;
                 }
                 print_image(imagefile);
@@ -437,7 +451,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             // hold on I think I messed up the story-line's code... eh it should result in the player going out no matter what.. I won't let them explore the cave *now*...
             printf("You start wandering around.\n");
             sleep(2);
-            printf("You find a long, thicc stick, almost buried inside the snow.\n");
+            printf("You find a long, thicc stick, almost buried inside the snow.\n"); // man there must be an IDE feature or something to mark these specific areas so it's easier to reach..
             sleep(3);
             do{
                 printf("Take it? [Y/n] ");
@@ -447,7 +461,31 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                 {
                     printf("You take the stick.\n"); // I'm thinking of making an array for the inventory.. maybe a multi-dimensional array. Eh I'll look about it in Python. that is, when I get a storage device D:
                     sleep(1);
-                    player_has_stick = 1;
+                    stick.has_this_weapon = 1;
+                    do{
+                    printf("You now have a stick. Equip it? [Y/n/stats] ");
+                    user_prompt();
+                    if(strcmp(user_input, "y\n") == 0 || user_input[1] == '\0') // i really should de-attach that newline from fgets in user_prompt()....
+                    {
+                        printf("You equip the stick as a weapon.\n");
+                        printf("Your Attack Points have increased by %d!",stick.power);
+                        break;
+                    }
+                    else if(strcmp(user_input, "n\n") == 0)
+                    {
+                        printf("You decided to just hold on to the stick.\n"); // this will affect the game somehow... has stick && is not equipped will result in the player getting access to a special area ;)
+                    }
+                    }while(1);
+                    else if(strcmp(user_input, "stats\n") == 0) // actually, I might not even have to use strcmp for this- then again, it didn't work like it did in C#...
+                    {
+                        printf("Weapon name: %s", stick.name);
+                        printf("Damage: %d", stick.power); // what else could we add.. maybe an ASCII art? yeah that sounds good
+                        filename = "stick.txt"; // im not so sure about having global variables... maybe a static one instead?
+                        if((imagefile = fopen(filename, "r")) == NULL)
+                        {
+
+                        }
+                    }
                     break;
                 }
                 else if(strcmp(user_input, "n\n") == 0)
@@ -482,7 +520,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             FILE * imagefile = NULL; // wut
             if((imagefile = fopen(filename,"r")) == NULL)
             {
-                fprintf(stderr,"Error, where is %s?",filename);
+                fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                 return -1;
             }
             print_image(imagefile);
@@ -511,7 +549,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             filename = "abandoned-house.txt";
             if((imagefile = fopen(filename,"r")) == NULL)
             {
-                fprintf(stderr,"Error, where is %s?",filename);
+                fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                 return -1;
             }
             print_image(imagefile);
@@ -615,6 +653,13 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
 
         else if(strcmp(user_input, "test\n") == 0)
         {
+            printf("\nStick.power = %d\n Player AP: %d",stick.power, player.attack_points);
+            //user_prompt(); // now what was I gonna do again.. damn it's hard to follow myself
+           // player.has_equipped = stick;
+            player.attack_points = *&player.attack_points + *&stick.power; // even the thing that I think would work does not... | point and dereference the struct variables?
+            printf("\nAP: %d", player.attack_points); // it works! now to hard code it in...
+           // printf("\nPlayer has equipped: %s\nPlayer's attack points: %d",player.has_equipped,player.attack_points);
+
             /* printf("Test input >> ");
              char char_name[255];
              fgets(player.name, 255,stdin); // but i dont understand... it worked before?? why doesn't it work now? i did literally nothing wrong
@@ -680,6 +725,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                  printf("Health is %d, name is %s", goblin.health_points, goblin.name);
                  // find a way to turn the entire input into lowercase already!! this is getting stressing...
              }*/
+             return 0;
         }
         else if (strcmp(user_input, "demo\n") == 0) // how the fuck did I test demo if I forgot the \n again
         {
@@ -689,7 +735,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
 
             if((imagefile = fopen(filename,"r")) == NULL)
             {
-                fprintf(stderr,"error opening %s\n",filename);
+                fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                 return -1;
             }
 
@@ -702,7 +748,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
 
             if((imagefile = fopen(filename,"r")) == NULL)
             {
-                fprintf(stderr,"error opening %s\n", filename);
+                fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                 return -1;
             }
 
@@ -716,7 +762,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             filename = "goblin.txt";
             if((imagefile = fopen(filename,"r")) == NULL)
             {
-                fprintf(stderr,"error opening %s\n", filename);
+                fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                 return -1;
             }
             print_image(imagefile);
@@ -726,7 +772,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             filename = "maze.txt";
             if((imagefile = fopen(filename,"r")) == NULL)
             {
-                fprintf(stderr,"error opening %s\n", filename);
+                fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                 return -1;
             }
             print_image(imagefile);
@@ -736,7 +782,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             filename = "snowing.txt";
             if((imagefile = fopen(filename,"r")) == NULL)
             {
-                fprintf(stderr,"error opening %s\n", filename);
+                fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                 return -1;
             }
             print_image(imagefile);
@@ -746,7 +792,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             filename = "pow!.txt";
             if((imagefile = fopen(filename,"r")) == NULL)
             {
-                fprintf(stderr,"error opening %s\n", filename);
+                fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
                 return -1;
             }
             print_image(imagefile);
