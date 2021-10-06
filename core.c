@@ -12,7 +12,8 @@ void print_image(FILE * imagefile);
 void user_prompt();
 //now.. what were we doing? oh yeah.. the user stat function. and structures... i think that's where we left off
 typedef struct basic_character_structure
-{ // but I dont understand... this variable was a pointer the whole time! why did it break yesterday after i deleted multiple commented out code blocks?
+{
+    // but I dont understand... this variable was a pointer the whole time! why did it break yesterday after i deleted multiple commented out code blocks?
     char name[255]; // this motherfucker right here fucks it all up... or as far as i understand it. pointers man... welp apparently the guy on stackoverflow cursed me with having to use malloc() for this name variable. this is my life now
     int health_points; // do max point versions of these variables as well!
     int defense_points;
@@ -78,7 +79,6 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
         // FIXED IT :D the "\n" is important in fgets apparently, never forget that!!! never forget the \n!!! hold the fuck up something's wrong here... the ".n" is printed onto a newline? this shit could prove to be a problem in the future, better solve it now. Alright it's fixed! learned how to get rid of the attached newline on the string!
         if(strcmp(user_input,"start\n") == 0)// FUCK YES FINALLY IT CAN START
         {
-        goto test;
             // do-while condition is set to false, hence ending the loop and achieving what we did with goto. no more spaghetti code that's hard to track, yaaay!!.. it's fucking, what, 2am? im tired..
             // phew... almost lost all progress there, LiveOSes are a dangerous environment to do development on!
             printf("Choose your name, choose wisely for it can NOT be changed later on! Max. 255 characters >||: "); // yeah something broke, potentially around these parts. wtf happened, this part should work just fine
@@ -453,10 +453,10 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             // hold on I think I messed up the story-line's code... eh it should result in the player going out no matter what.. I won't let them explore the cave *now*...
             printf("You start wandering around.\n");
             sleep(2);
-            test:
             printf("You find a long, thicc stick, almost buried inside the snow.\n"); // man there must be an IDE feature or something to mark these specific areas so it's easier to reach..
             sleep(3);
-            do{
+            do
+            {
                 printf("Take it? [Y/n] ");
                 user_prompt();
                 sleep(1);
@@ -465,42 +465,44 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                     printf("You take the stick.\n"); // I'm thinking of making an array for the inventory.. maybe a multi-dimensional array. Eh I'll look about it in Python. that is, when I get a storage device D:
                     sleep(1);
                     stick.has_this_weapon = 1;
-                    do{
-                    printf("You now have a stick. Equip it? [Y/n/stats] ");
-                    user_prompt();
-                    if(strcmp(user_input, "y\n") == 0 || user_input[1] == '\0') // i really should de-attach that newline from fgets in user_prompt()....
+                    do
                     {
-                        printf("You equip the stick as a weapon.\n");
-                        sleep(1);
-                        printf("Your Attack Points have increased by %d!\n",stick.power);
-                        player.attack_points = *&player.attack_points + *&stick.power;
-                        sleep(1);
-                        printf("Current AP: %d", player.attack_points);
-                        // insert "congrats!.mp3" here
-                        sleep(3);
-                        break;
-                    }
-                    else if(strcmp(user_input, "n\n") == 0)
-                    {
-                        printf("You decided to just hold on to the stick.\n"); // this will affect the game somehow... has stick && is not equipped will result in the player getting access to a special area ;)
-                        sleep(2);
-                        break;
-                    }
-
-                    else if(strcmp(user_input, "stats\n") == 0) // actually, I might not even have to use strcmp for this- then again, it didn't work like it did in C#...
-                    {
-                        printf("Weapon name: %s\n", stick.name);
-                        printf("Damage: %d\n", stick.power); // what else could we add.. maybe an ASCII art? yeah that sounds good
-                        filename = "stick.txt"; // im not so sure about having global variables... maybe a static one instead?
-                        if((imagefile = fopen(filename, "r")) == NULL)
+                        printf("You now have a stick. Equip it? [Y/n/stats] ");
+                        user_prompt();
+                        if(strcmp(user_input, "y\n") == 0 || user_input[1] == '\0') // i really should de-attach that newline from fgets in user_prompt()....
                         {
-                            fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
+                            printf("You equip the stick as a weapon.\n");
+                            sleep(1);
+                            printf("Your Attack Points have increased by %d!\n",stick.power);
+                            player.attack_points = *&player.attack_points + *&stick.power;
+                            sleep(1);
+                            printf("Current AP: %d", player.attack_points);
+                            // insert "congrats!.mp3" here
+                            sleep(3);
+                            break;
                         }
-                        print_image(imagefile);
-                        fclose(imagefile);
-                        sleep(2);
+                        else if(strcmp(user_input, "n\n") == 0)
+                        {
+                            printf("You decided to just hold on to the stick.\n"); // this will affect the game somehow... has stick && is not equipped will result in the player getting access to a special area ;)
+                            sleep(2);
+                            break;
+                        }
+
+                        else if(strcmp(user_input, "stats\n") == 0) // actually, I might not even have to use strcmp for this- then again, it didn't work like it did in C#...
+                        {
+                            printf("Weapon name: %s\n", stick.name);
+                            printf("Damage: %d\n", stick.power); // what else could we add.. maybe an ASCII art? yeah that sounds good
+                            filename = "stick.txt"; // im not so sure about having global variables... maybe a static one instead?
+                            if((imagefile = fopen(filename, "r")) == NULL)
+                            {
+                                fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
+                            }
+                            print_image(imagefile);
+                            fclose(imagefile);
+                            sleep(2);
+                        }
                     }
-                    }while(1);
+                    while(1);
                     break;
                 }
                 else if(strcmp(user_input, "n\n") == 0)
@@ -509,7 +511,8 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                     sleep(5);
                     break;
                 }
-            }while(1);
+            }
+            while(1);
             printf("\nYou keep walking.\n");
             sleep(2); /* // thinking again, I don't think it's appropriate to introduce the player to a fight this early, they have no proper equipment, sword whatever
             printf("What... is that thing far ahead?\n");
@@ -668,10 +671,10 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
         {
             printf("\nStick.power = %d\n Player AP: %d",stick.power, player.attack_points);
             //user_prompt(); // now what was I gonna do again.. damn it's hard to follow myself
-           // player.has_equipped = stick;
+            // player.has_equipped = stick;
             player.attack_points = *&player.attack_points + *&stick.power; // even the thing that I think would work does not... | point and dereference the struct variables?
             printf("\nAP: %d", player.attack_points); // it works! now to hard code it in...
-           // printf("\nPlayer has equipped: %s\nPlayer's attack points: %d",player.has_equipped,player.attack_points);
+            // printf("\nPlayer has equipped: %s\nPlayer's attack points: %d",player.has_equipped,player.attack_points);
 
             /* printf("Test input >> ");
              char char_name[255];
@@ -738,7 +741,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                  printf("Health is %d, name is %s", goblin.health_points, goblin.name);
                  // find a way to turn the entire input into lowercase already!! this is getting stressing...
              }*/
-             return 0;
+            return 0;
         }
         else if (strcmp(user_input, "demo\n") == 0) // how the fuck did I test demo if I forgot the \n again
         {
