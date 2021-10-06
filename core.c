@@ -1,3 +1,4 @@
+// TEST RELEASE
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -79,6 +80,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
         // FIXED IT :D the "\n" is important in fgets apparently, never forget that!!! never forget the \n!!! hold the fuck up something's wrong here... the ".n" is printed onto a newline? this shit could prove to be a problem in the future, better solve it now. Alright it's fixed! learned how to get rid of the attached newline on the string!
         if(strcmp(user_input,"start\n") == 0)// FUCK YES FINALLY IT CAN START
         {
+        goto test;
             // do-while condition is set to false, hence ending the loop and achieving what we did with goto. no more spaghetti code that's hard to track, yaaay!!.. it's fucking, what, 2am? im tired..
             // phew... almost lost all progress there, LiveOSes are a dangerous environment to do development on!
             printf("Choose your name, choose wisely for it can NOT be changed later on! Max. 255 characters >||: "); // yeah something broke, potentially around these parts. wtf happened, this part should work just fine
@@ -453,6 +455,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             // hold on I think I messed up the story-line's code... eh it should result in the player going out no matter what.. I won't let them explore the cave *now*...
             printf("You start wandering around.\n");
             sleep(2);
+            test:
             printf("You find a long, thicc stick, almost buried inside the snow.\n"); // man there must be an IDE feature or something to mark these specific areas so it's easier to reach..
             sleep(3);
             do
@@ -488,7 +491,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                             break;
                         }
 
-                        else if(strcmp(user_input, "stats\n") == 0) // actually, I might not even have to use strcmp for this- then again, it didn't work like it did in C#...
+                        else if(strcmp(user_input, "statss\n") == 0) // actually, I might not even have to use strcmp for this- then again, it didn't work like it did in C#...
                         {
                             printf("Weapon name: %s\n", stick.name);
                             printf("Damage: %d\n", stick.power); // what else could we add.. maybe an ASCII art? yeah that sounds good
@@ -849,6 +852,10 @@ void user_prompt() // the only thing that's changed.
     for (int i = 0; user_input[i]; i++)
     {
         user_input[i] = tolower(user_input[i]);
+    }
+    if(strcmp(user_input, "stats\n") == 0)
+    {
+        printf("Test pass.\n");
     }
 } // and it doesnt even have to do with this!.. or does it? it does not apparently D:
 /*
