@@ -59,6 +59,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
     player.mana_points = 30;
     player.name; // curious... what if i... nah didn't work
     char * filename;
+    FILE * imagefile = NULL;
     // yeah player.name comes in after the game starts and the user chooses a name. | I LITERALLY TESTED IT BEFORE WHY DOESN'T THE SAME THING WORK NOW
 
     printf("Welcome to the alpha version of <insert game name here>.\nCOPYRIGHT u/Bahrican798.\n"); // I gotta find a name, man...
@@ -77,6 +78,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
         // FIXED IT :D the "\n" is important in fgets apparently, never forget that!!! never forget the \n!!! hold the fuck up something's wrong here... the ".n" is printed onto a newline? this shit could prove to be a problem in the future, better solve it now. Alright it's fixed! learned how to get rid of the attached newline on the string!
         if(strcmp(user_input,"start\n") == 0)// FUCK YES FINALLY IT CAN START
         {
+        goto test;
             // do-while condition is set to false, hence ending the loop and achieving what we did with goto. no more spaghetti code that's hard to track, yaaay!!.. it's fucking, what, 2am? im tired..
             // phew... almost lost all progress there, LiveOSes are a dangerous environment to do development on!
             printf("Choose your name, choose wisely for it can NOT be changed later on! Max. 255 characters >||: "); // yeah something broke, potentially around these parts. wtf happened, this part should work just fine
@@ -451,6 +453,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             // hold on I think I messed up the story-line's code... eh it should result in the player going out no matter what.. I won't let them explore the cave *now*...
             printf("You start wandering around.\n");
             sleep(2);
+            test:
             printf("You find a long, thicc stick, almost buried inside the snow.\n"); // man there must be an IDE feature or something to mark these specific areas so it's easier to reach..
             sleep(3);
             do{
@@ -468,18 +471,26 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                     if(strcmp(user_input, "y\n") == 0 || user_input[1] == '\0') // i really should de-attach that newline from fgets in user_prompt()....
                     {
                         printf("You equip the stick as a weapon.\n");
-                        printf("Your Attack Points have increased by %d!",stick.power);
+                        sleep(1);
+                        printf("Your Attack Points have increased by %d!\n",stick.power);
+                        player.attack_points = *&player.attack_points + *&stick.power;
+                        sleep(1);
+                        printf("Current AP: %d", player.attack_points);
+                        // insert "congrats!.mp3" here
+                        sleep(3);
                         break;
                     }
                     else if(strcmp(user_input, "n\n") == 0)
                     {
                         printf("You decided to just hold on to the stick.\n"); // this will affect the game somehow... has stick && is not equipped will result in the player getting access to a special area ;)
+                        sleep(2);
+                        break;
                     }
 
                     else if(strcmp(user_input, "stats\n") == 0) // actually, I might not even have to use strcmp for this- then again, it didn't work like it did in C#...
                     {
-                        printf("Weapon name: %s", stick.name);
-                        printf("Damage: %d", stick.power); // what else could we add.. maybe an ASCII art? yeah that sounds good
+                        printf("Weapon name: %s\n", stick.name);
+                        printf("Damage: %d\n", stick.power); // what else could we add.. maybe an ASCII art? yeah that sounds good
                         filename = "stick.txt"; // im not so sure about having global variables... maybe a static one instead?
                         if((imagefile = fopen(filename, "r")) == NULL)
                         {
@@ -499,7 +510,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                     break;
                 }
             }while(1);
-            printf("You keep walking.\n");
+            printf("\nYou keep walking.\n");
             sleep(2); /* // thinking again, I don't think it's appropriate to introduce the player to a fight this early, they have no proper equipment, sword whatever
             printf("What... is that thing far ahead?\n");
             sleep(3);
