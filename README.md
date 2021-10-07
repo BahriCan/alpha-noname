@@ -24,4 +24,4 @@ If you wanna make changes to the source code, edit core.c and compile with your 
 
 # How to play?
 
-Documentation will be released sooner or later.
+Documentation will be released sooner or later. You must view source code and figure some stuff out by yourself until then.
