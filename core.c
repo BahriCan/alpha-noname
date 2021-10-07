@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #define MAX_LEN 128
+// we could use arrays and pointers for inventory!!!
 // just a few more cleanups, then restructing the code to work with just lowercase input.
 // We can use this typedef struct for monsters and the player(s), it'll especially be useful if we ever put in a multiplayer mode.
 // Tomorrow morning we'll be doing a cleanup now that the isInvalidInput variable has been deprecated and the user prompt is a function now..
@@ -80,7 +81,6 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
         // FIXED IT :D the "\n" is important in fgets apparently, never forget that!!! never forget the \n!!! hold the fuck up something's wrong here... the ".n" is printed onto a newline? this shit could prove to be a problem in the future, better solve it now. Alright it's fixed! learned how to get rid of the attached newline on the string!
         if(strcmp(user_input,"start\n") == 0)// FUCK YES FINALLY IT CAN START
         {
-        goto test;
             // do-while condition is set to false, hence ending the loop and achieving what we did with goto. no more spaghetti code that's hard to track, yaaay!!.. it's fucking, what, 2am? im tired..
             // phew... almost lost all progress there, LiveOSes are a dangerous environment to do development on!
             printf("Choose your name, choose wisely for it can NOT be changed later on! Max. 255 characters >||: "); // yeah something broke, potentially around these parts. wtf happened, this part should work just fine
@@ -455,7 +455,6 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             // hold on I think I messed up the story-line's code... eh it should result in the player going out no matter what.. I won't let them explore the cave *now*...
             printf("You start wandering around.\n");
             sleep(2);
-            test:
             printf("You find a long, thicc stick, almost buried inside the snow.\n"); // man there must be an IDE feature or something to mark these specific areas so it's easier to reach..
             sleep(3);
             do
