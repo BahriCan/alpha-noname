@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <stdlib.h>
 #define MAX_LEN 128
 // we could use arrays and pointers for inventory!!!
 // just a few more cleanups, then restructing the code to work with just lowercase input.
@@ -29,9 +30,9 @@ typedef struct weapon
     char *name;
     int power;
     int has_this_weapon;
+    int is_bought;
     int is_equipped; // how am I gonna pull this off though..
 } weapon;
-
 
 // now to add in a function to print the enemy's status. the function will take an argument, and it'll print the status of a certain thing depending on the argument it receives. it'll also turn a value true (if the user already fought that monster before), which'll be useful for the free-fighting mode
 int main() // add in command-line options with int argc, char *argv[]... it'll need a refactoring
@@ -63,6 +64,25 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
     player.name; // curious... what if i... nah didn't work
     char * filename;
     FILE * imagefile = NULL;
+    weapon car;
+    car.name = "Car";
+    weapon rusty_sword;
+    rusty_sword.name = "Rusty Sword";
+    rusty_sword.power = 7;
+    /*char * shop_slot[2];
+    int shop_bought[2];*/
+    struct Shop
+    {
+        int slot_bought[9];
+        char * slot[9];
+    };
+    struct Shop shop;
+    shop.slot[1] = "h";
+   /* shop_bought[0] = 0;
+    shop_bought[1];
+    shop_slot[0] = stick.name;
+    shop_slot[1] = rusty_sword.name;*/ // i think a struct is in order for this..
+
     // yeah player.name comes in after the game starts and the user chooses a name. | I LITERALLY TESTED IT BEFORE WHY DOESN'T THE SAME THING WORK NOW
 
     printf("Welcome to the alpha version of <insert game name here>.\nCOPYRIGHT u/Bahrican798.\n"); // I gotta find a name, man...
@@ -655,6 +675,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             printf("-Perhaps make the variables an array? IF we ever add difficulty options to this, that could be useful to load in different values, e.g 10 damage for a monster in easy mode, 15 in normal, 20 in expert, 300/200/150 player health etc.\n");
             //printf("-Check fgets, scanf seems to be a pain...\n");
             printf("-The save/load feature can be a function!\n");
+            printf("- A map of the area(kingdom), including the mountains in mountains.txt and rocky-mountains.txt\n");
             printf("-The print_info function should be checked another time, you need to learn how to refer to an object by a string. For now just dont implement the function to print enemy info...\n");
             printf("-Search how to pass the user input as an argument or whatever to a function... It'll be useful after the user encounters a few monsters and bosses and whatnot.\n");
             //printf("-Hold the fuck up this is getting more and more complicated.. If I am going to be writing the same scenario again in another decision later on, this'll double the amount of code and the time to write it! There MUST be a way to join the both ends into the same route... I need to get out of the if statements.. Should we use goto/longjmp? I think so..");
@@ -671,12 +692,14 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
 
         else if(strcmp(user_input, "test\n") == 0)
         {
-            printf("\nStick.power = %d\n Player AP: %d",stick.power, player.attack_points);
+            printf("Shop slot 1: %s", shop.slot[1]);
+//            printf("Shop slot 0: %s\n Shop Slot 1: %s", shop_slot[0], shop_slot[1]);
+            /*printf("\nStick.power = %d\n Player AP: %d",stick.power, player.attack_points);
             //user_prompt(); // now what was I gonna do again.. damn it's hard to follow myself
             player.has_equipped = stick.name; //strange... it seems to have calmed down now
             player.attack_points += stick.power; // even the thing that I think would work does not... | point and dereference the struct variables?
             printf("\nAP: %d", player.attack_points); // it works! now to hard code it in...
-            printf("\nHE: %s", player.has_equipped);
+            printf("\nHE: %s", player.has_equipped);*/
             // printf("\nPlayer has equipped: %s\nPlayer's attack points: %d",player.has_equipped,player.attack_points);
 
             /* printf("Test input >> ");
@@ -820,12 +843,12 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             sleep(0.4);
             printf("Challenge yourself in <insert game name here>!\n");
         }
-        else if(strcmp(user_input, "exit") == 0)
+        /*else if(strcmp(user_input, "exit") == 0)
         {
             printf("\nThank you for playing!\n");
             return 5;
 
-        }
+        }*/
         else
         {
             printf("Please type \"Start\" to play.\n");
@@ -853,10 +876,15 @@ void user_prompt() // the only thing that's changed.
     {
         user_input[i] = tolower(user_input[i]);
     }
-    if(strcmp(user_input, "stats\n") == 0)
+    if(strcmp(user_input, "exit\n") == 0)
+    {
+        printf("\n\tThank you for playing! See you next time!\n"); // play a sound here... like at the end card of sm64
+        exit(5);
+    }
+    /*if(strcmp(user_input, "stats\n") == 0)
     {
         printf("Test pass.\n");
-    }
+    }*/
 } // and it doesnt even have to do with this!.. or does it? it does not apparently D:
 /*
 int user_prompt()
