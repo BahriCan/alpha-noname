@@ -75,9 +75,9 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
     {
         int slot_bought[9];
         char * slot[9];
-    };
-    struct Shop shop;
+    } shop;
     shop.slot[1] = "h";
+    shop.slot_bought[1] = 0;
    /* shop_bought[0] = 0;
     shop_bought[1];
     shop_slot[0] = stick.name;
@@ -692,7 +692,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
 
         else if(strcmp(user_input, "test\n") == 0)
         {
-            printf("Shop slot 1: %s", shop.slot[1]);
+            printf("Shop slot 1: %s\nSlot 1 bought: %d", shop.slot[1], shop.slot_bought[1]);
 //            printf("Shop slot 0: %s\n Shop Slot 1: %s", shop_slot[0], shop_slot[1]);
             /*printf("\nStick.power = %d\n Player AP: %d",stick.power, player.attack_points);
             //user_prompt(); // now what was I gonna do again.. damn it's hard to follow myself
