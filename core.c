@@ -700,7 +700,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                 market.slot_bought[1] = 1;
                 printf("You bought %s. Slot bought: %d\n", market.slot[1], market.slot_bought[1]);
                 //free(market.slot[1]);
-                //market.slot[1] = "f"; //uh oh recycling plans did a bit of a whoopsy...
+                market.slot[1] = "f"; //uh oh recycling plans did a bit of a whoopsy...
                 //market.slot[1] = NULL; this didnt help as well
                 printf("Slot 1: %s\n Size of slot 1: %d", market.slot[1], sizeof(market.slot[1]));
             }
