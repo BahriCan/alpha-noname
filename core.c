@@ -75,9 +75,10 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
     {
         int slot_bought[9];
         char * slot[9];
-    } shop;
-    shop.slot[1] = "h";
-    shop.slot_bought[1] = 0;
+    };
+    struct Shop market;
+    market.slot[1] = "h";
+    market.slot_bought[1] = 0;
    /* shop_bought[0] = 0;
     shop_bought[1];
     shop_slot[0] = stick.name;
@@ -692,7 +693,18 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
 
         else if(strcmp(user_input, "test\n") == 0)
         {
-            printf("Shop slot 1: %s\nSlot 1 bought: %d", shop.slot[1], shop.slot_bought[1]);
+            printf("Buy %s? Slot 1 bought: %d Size of slot 1: %d\n", market.slot[1], market.slot_bought[1], sizeof(market.slot[1]));
+            user_prompt();
+            if(strcmp(user_input,"y\n") == 0)
+            {
+                market.slot_bought[1] = 1;
+                printf("You bought %s. Slot bought: %d\n", market.slot[1], market.slot_bought[1]);
+                //free(market.slot[1]);
+                //market.slot[1] = "f"; //uh oh recycling plans did a bit of a whoopsy...
+                //market.slot[1] = NULL; this didnt help as well
+                printf("Slot 1: %s\n Size of slot 1: %d", market.slot[1], sizeof(market.slot[1]));
+            }
+          //  printf("Shop slot 1: %s\nSlot 1 bought: %d", shop.slot[1], shop.slot_bought[1]);
 //            printf("Shop slot 0: %s\n Shop Slot 1: %s", shop_slot[0], shop_slot[1]);
             /*printf("\nStick.power = %d\n Player AP: %d",stick.power, player.attack_points);
             //user_prompt(); // now what was I gonna do again.. damn it's hard to follow myself
