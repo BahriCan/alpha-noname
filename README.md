@@ -20,6 +20,8 @@ Then
 
 Then just run the maingame executable with ```./maingame``` and there you have it! Enjoy!
 
+Note: You may or may not need to make it executable by running ```chmod +x maingame```.
+
 If you wanna make changes to the source code, edit core.c and compile with your favorite C compiler I guess. I compile it with TCC!
 
 # How to play?
