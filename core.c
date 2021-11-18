@@ -6,16 +6,24 @@
 #include <stdlib.h>
 #define MAX_LEN 128
 // we could use arrays and pointers for inventory!!!
+// add a command line option "--name=XXX", where XXX is what the user enters. that string will be copied to the player.name variable. the beginning of the game will check whether or not you entered your name that way- and if you did- it'll skip. if you did not- you'll enter your name the normal way. WAIT THIS COULD CAUSE A BUFFER OVERFLOW
 // just a few more cleanups, then restructing the code to work with just lowercase input.
+// make the inventory images all the same size e.g 8 characters x 8 characters, so formatting it will be easier
+// multi-dimensional array for the inventory? yeah i think i got the inventory part figured out
 // We can use this typedef struct for monsters and the player(s), it'll especially be useful if we ever put in a multiplayer mode.
 // Tomorrow morning we'll be doing a cleanup now that the isInvalidInput variable has been deprecated and the user prompt is a function now..
 // ahh much better now that the code is reformatted
 char user_input[255]; // now to refactor the code...
+char * filename;
+int test = 0;
+FILE * imagefile = NULL;
 void print_image(FILE * imagefile);
 void user_prompt();
 //now.. what were we doing? oh yeah.. the user stat function. and structures... i think that's where we left off
+// struct monster - multiplier, health, name etc...
 typedef struct basic_character_structure
 {
+    // i believe i have figured out how to make this a pointer again.. it's different than what I did the first time(which i dont remember at all)- this uses malloc() and sizeof(). we allocate memory and determine the size we'll allocate with sizeof: malloc(sizeof(x.name));- this will work. i dont know what the advantage of making this a pointer will be- maybe we could free it at some point? use this method with other variables(like stats of weapons and monsters- especially for weapons that are currently not needed.) to load them into memory when needed- and free the memory afterwards using free()? (we can only use the free() function on variables that allocated memory using malloc())
     // but I dont understand... this variable was a pointer the whole time! why did it break yesterday after i deleted multiple commented out code blocks?
     char name[255]; // this motherfucker right here fucks it all up... or as far as i understand it. pointers man... welp apparently the guy on stackoverflow cursed me with having to use malloc() for this name variable. this is my life now
     int health_points; // do max point versions of these variables as well!
@@ -49,7 +57,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
     int user_wood_amount = 0;
     int player_took_jacket = 0;
     int player_is_wearing_jacket = 0;
-    int player_has_stick = 0; // yeah it's getting really messy up here and unmaintainable. I gotta think of a clever solution if I wanna use booleans to check for the current state of stuff
+    //int player_has_stick = 0; // yeah it's getting really messy up here and unmaintainable. I gotta think of a clever solution if I wanna use booleans to check for the current state of stuff | I COULD instead turn the stick to an object the player will use later- for instance making a fire- instead of being used as a weapon.. nah weapon is good for it
     // man I said a clean-up... not more messy, deprecated, commented out code!! | I should've tested before deprecating random shit.
     weapon stick;
     stick.power = 5;
@@ -61,14 +69,14 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
     player.defense_points = 20;
     player.health_points = 200;
     player.mana_points = 30;
-    player.name; // curious... what if i... nah didn't work
-    char * filename;
+    //player.name; // curious... what if i... nah didn't work
+    // char * filename;
     FILE * imagefile = NULL;
-    weapon car;
+    /*weapon car;
     car.name = "Car";
     weapon rusty_sword;
     rusty_sword.name = "Rusty Sword";
-    rusty_sword.power = 7;
+    rusty_sword.power = 7;*/
     /*char * shop_slot[2];
     int shop_bought[2];*/
     struct Shop
@@ -102,6 +110,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
         // FIXED IT :D the "\n" is important in fgets apparently, never forget that!!! never forget the \n!!! hold the fuck up something's wrong here... the ".n" is printed onto a newline? this shit could prove to be a problem in the future, better solve it now. Alright it's fixed! learned how to get rid of the attached newline on the string!
         if(strcmp(user_input,"start\n") == 0)// FUCK YES FINALLY IT CAN START
         {
+            //player.name = malloc(sizeof(player.name));
             // do-while condition is set to false, hence ending the loop and achieving what we did with goto. no more spaghetti code that's hard to track, yaaay!!.. it's fucking, what, 2am? im tired..
             // phew... almost lost all progress there, LiveOSes are a dangerous environment to do development on!
             printf("Choose your name, choose wisely for it can NOT be changed later on! Max. 255 characters >||: "); // yeah something broke, potentially around these parts. wtf happened, this part should work just fine
@@ -646,8 +655,9 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             printf("Welcome to the pre-alpha release. This command is only known by those who observe the source code :D\n"); // Fuck I can't make a smiley ( ;) )
             printf("To do stuff:\n");
             printf("Ideas to be added:\n");
-            printf("- Different routes.\n");
+            printf("-Different routes.\n");
             printf("-Shops, alongside routes.\n");
+            printf("-Add a goto label into the game's executable file. And goto to that label at next start up. OR  tell the user that they left off from some place(see where the label takes place in between two points, and determine the name it left off from, maybe decide from the chapter names), and ask them if they wanna start over or continue from where they left off.\n");
             printf("-Show the user their options, how many paths they can take at that moment, what's nearby etc.\n");
             printf("-maybe we could return the user's system's clock on the phone.txt ascii art's \"clock\"\n");
             printf("-Experience points, leveling up and having your stats go up etc. Maybe I'll add the option to select which stat you wanna upgrade, like in Paper Mario\n");
@@ -682,6 +692,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             //printf("-Hold the fuck up this is getting more and more complicated.. If I am going to be writing the same scenario again in another decision later on, this'll double the amount of code and the time to write it! There MUST be a way to join the both ends into the same route... I need to get out of the if statements.. Should we use goto/longjmp? I think so..");
             printf("-Add defense points too! Oh and have a multiplier for the attack powers! Like in pokémon, but simplified!! Your attack power will be multiplied by a random number between 0.5 and 1.0!!\n");
             printf("- Add in a way to play audio files. We'll put in sound effects for certain moments, like wearing a jacket, or snowing etc.\n");
+            printf("- Oh! Oh! A hunger meter! And speaking of meters, dont forget the mana one as well!\n");
             printf("Added/fixed stuff:\n");
             printf("+Finally stopped using goto, I am using for loops instead now that for stopped being such a dick and started working...\n");
             printf("+Got rid of scanf, using fgets now.\n");
@@ -693,7 +704,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
 
         else if(strcmp(user_input, "test\n") == 0)
         {
-            printf("Buy %s? Slot 1 bought: %d Size of slot 1: %d\n", market.slot[1], market.slot_bought[1], sizeof(market.slot[1]));
+            printf("Buy %s? Slot 1 bought: %d Size of slot 1: %ld\n", market.slot[1], market.slot_bought[1], sizeof(market.slot[1]));
             user_prompt();
             if(strcmp(user_input,"y\n") == 0)
             {
@@ -702,7 +713,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                 //free(market.slot[1]);
                 market.slot[1] = "f"; //uh oh recycling plans did a bit of a whoopsy...
                 //market.slot[1] = NULL; this didnt help as well
-                printf("Slot 1: %s\n Size of slot 1: %d", market.slot[1], sizeof(market.slot[1]));
+                printf("Slot 1: %s\n Size of slot 1: %ld", market.slot[1], sizeof(market.slot[1]));
             }
           //  printf("Shop slot 1: %s\nSlot 1 bought: %d", shop.slot[1], shop.slot_bought[1]);
 //            printf("Shop slot 0: %s\n Shop Slot 1: %s", shop_slot[0], shop_slot[1]);
@@ -725,6 +736,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                 // hold on, just a few more lines and we can release the pre-alpha version
                 // alpha-release note, I could potentially replace this for loop with a do-while loop. i dont know which is more efficient...
                 // do-while seems more explanotary, i mean i had a fucking heart-stroke while trying to understand this loop i wrote..
+                // future alpha release note, I have to fucking scroll down all the way to the other end of the brackets to see the while condition, for seems easier to read as initialization, test condition and incrementing are all in one parantheses
             {
                 printf("test: ");
                 scanf("%s", user_input);
@@ -781,7 +793,7 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
              }*/
             return 0;
         }
-        else if (strcmp(user_input, "demo\n") == 0) // how the fuck did I test demo if I forgot the \n again
+        else if (strcmp(user_input, "demo\n") == 0) // how the fuck did I test demo if I forgot the \n again | meh I probably removed the \n after deciding to detach it in user_prompt(which you didnt implement T_T)
         {
             printf("In a far away, distant land...\n");
             char * filename = "mountains.txt";
@@ -890,6 +902,25 @@ void user_prompt() // the only thing that's changed.
     }
     if(strcmp(user_input, "exit\n") == 0)
     {
+        /*filename = "a.out";
+        if((imagefile = fopen(filename,"rb+")) == NULL)
+        {
+            fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
+            return -1;
+        }
+        fprintf("label:", filename);
+        fclose(imagefile);
+        goto label; // quite the stupid idea :DDD
+        I'll just write it into an external file... .txt file maybe? nah... json? xml? maybe... */
+        filename = "save1.txt";
+        // check if save1.txt exists (if fopen != NULL), if it does, ask the user if they wanna load it in. it may or may not be corrupted though.. we need to check that as well
+        if((imagefile = fopen(filename, "w")) == NULL)
+        {
+            fprintf(stderr,"\033[0;31mError, where is %s?\033[0m\n",filename);
+            return -1;
+        }
+        fprintf(imagefile,"%d", test);
+        fclose(imagefile);
         printf("\n\tThank you for playing! See you next time!\n"); // play a sound here... like at the end card of sm64
         exit(5);
     }
