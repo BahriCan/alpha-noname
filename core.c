@@ -1,9 +1,9 @@
 // TEST RELEASE
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <ctype.h>
-#include <stdlib.h>
+#include <stdio.h> // literally 99% percent of the game is I/O and printing on the screen
+#include <string.h> // for comparing strings.. i think
+#include <unistd.h> // for the sleep function
+#include <ctype.h> // dunno what i put this in for.. oh yeah, probably for tolower and toupper
+#include <stdlib.h> // dont remember what this is for either... it's for exit() apparently
 #define MAX_LEN 128
 // we could use arrays and pointers for inventory!!!
 // add a command line option "--name=XXX", where XXX is what the user enters. that string will be copied to the player.name variable. the beginning of the game will check whether or not you entered your name that way- and if you did- it'll skip. if you did not- you'll enter your name the normal way. WAIT THIS COULD CAUSE A BUFFER OVERFLOW
@@ -45,6 +45,8 @@ typedef struct weapon
 // now to add in a function to print the enemy's status. the function will take an argument, and it'll print the status of a certain thing depending on the argument it receives. it'll also turn a value true (if the user already fought that monster before), which'll be useful for the free-fighting mode
 int main() // add in command-line options with int argc, char *argv[]... it'll need a refactoring
 {
+    //up top is the easter egg variables
+    int name_easteregg = 0;
     // a new version, we'll be using fgets() instead of scanf() now. i see that it is dangerous...
     //int punch_attack_power; oh yeah.. CHECK IN WITH THIS VARIABLE, WE MIGHT HAVE TO CREATE A SPECIAL STRUCTURE FOR THE PLAYER THEMSELVES AND THE MONSTERS SEPARATELY
     //char character_name[255]; // SHIIIT IF I DO NOT PROVIDE A VALUE IT'LL NEVER BE BUFFER OVERRUN FUCK YEAAH| this one could remind me that I can't = fgets() in the future
@@ -113,8 +115,43 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
             //player.name = malloc(sizeof(player.name));
             // do-while condition is set to false, hence ending the loop and achieving what we did with goto. no more spaghetti code that's hard to track, yaaay!!.. it's fucking, what, 2am? im tired..
             // phew... almost lost all progress there, LiveOSes are a dangerous environment to do development on!
-            printf("Choose your name, choose wisely for it can NOT be changed later on! Max. 255 characters >||: "); // yeah something broke, potentially around these parts. wtf happened, this part should work just fine
-            fgets(player.name,255,stdin); // why does fgets not work? does it have something to do with the loop? the if statement bothers it maybe? fuck im tired
+           //printf("Choose your name, choose wisely for it can NOT be changed later on! Max. 255 characters >||: "); // yeah something broke, potentially around these parts. wtf happened, this part should work just fine
+           do{
+            printf("Choose your name, choose wisely for it can NOT be changed later on! Max. 255 characters >||: ");
+            fgets(player.name,255,stdin);
+            //printf("%d\n", name_easteregg); debugging lines :D
+            //printf("%s sa\n", player.name[1]);
+            if(player.name[1] == '\0')
+            {
+                name_easteregg += 1;
+                if(name_easteregg == 1)
+                {
+                    printf("Please choose a name.\n");
+                }
+                else if(name_easteregg == 2)
+                {
+                    printf("I SAID. Choose a name.\n");
+                }
+                else if(name_easteregg == 3)
+                {
+                    printf("Do you think this is funny?\n");
+                }
+                else if(name_easteregg == 4)
+                {
+                    printf("Stop wasting time and choose already.\n");
+                }
+                else if(name_easteregg >= 5)
+                {
+                    printf("CHOOSE A FUCKING NAME MOTHERFUCKER\n");
+                }
+            }
+            else if(player.name[1] != '\0') // oh fuck I almost fell in the same pit of shit
+            {
+                break;
+            }
+            }while(1);
+            //fgets(player.name,255,stdin); // why does fgets not work? does it have something to do with the loop? the if statement bothers it maybe? fuck im tired
+            //yyeaah.. i think we gotta "hard code" this in? we cant use the function here, we gotta check to see if the user input is blank or not.
             // yeah replaced the scanf here and everywhere else with fgets, I have seen that it crashes if the user inputs an overflowing value.. and there is nothing to stop the user from doing that :P
             // we could perhaps make this user_prompt() function receive arguments and replace the fgets(user_input,255,stdin) with something else with those arguments..
             player.name[strcspn(player.name, "\n")] = 0; // i hope this works... if i put it in user_prompt() I'll never need to remember the \n again! I don't see the issue here... I'll do it after I think about the possible outcomes
@@ -223,10 +260,12 @@ int main() // add in command-line options with int argc, char *argv[]... it'll n
                                                 printf("You wear the jacket.\n");
                                                 sleep(3);
                                                 printf(".\t");
+                                                fflush(stdout); // flushing the buffer, if you dont do this, the printf command will be buffered, and the nothing will be printed until the sleep commands are over and the buffer is flushed. so, flush the buffer to force print everytime!
                                                 sleep(2);
-                                                printf(".\t");
+                                                printf(".\t ");
+                                                fflush(stdout);
                                                 sleep(2);
-                                                printf(".\n");
+                                                printf(". \n");
                                                 sleep(3); // huh? what was i doing again?
                                                 player_is_wearing_jacket = 1;
                                                 printf("You start feeling warmer.\n");
